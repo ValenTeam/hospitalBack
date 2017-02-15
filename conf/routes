@@ -1,0 +1,86 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+########################################################################################################################
+#
+#                                               ###    ########  ####
+#                                              ## ##   ##     ##  ##
+#                                             ##   ##  ##     ##  ##
+#                                            ##     ## ########   ##
+#                                            ######### ##         ##
+#                                            ##     ## ##         ##
+#                                            ##     ## ##        ####
+#
+########################################################################################################################
+
+
+
+#########################################
+# General
+#########################################
+
+GET         /                                  controllers.Application.index()
+
+#########################################
+# Mediciones
+#########################################
+
+POST        /medicion                          controllers.MedicionController.procesarMedicion()
+POST        /emergencia                        controllers.EmergenciaController.procesarEmergencia()
+
+#########################################
+# Hospital
+#########################################
+
+POST        /hospital                          controllers.HospitalController.create()
+GET         /hospital                          controllers.HospitalController.listAll()
+GET         /hospital/:id                      controllers.HospitalController.findById(id:String)
+GET         /hospital/name/:name               controllers.HospitalController.findByName(name:String)
+
+#########################################
+# Marcapasos
+#########################################
+
+POST        /marcapasos                          controllers.MarcapasosController.create()
+GET         /marcapasos                          controllers.MarcapasosController.listAll()
+GET         /marcapasos/:id                      controllers.MarcapasosController.findById(id:String)
+PUT         /marcapasos/:id                      controllers.MarcapasosController.update(id:String)
+
+
+#########################################
+# Paciente
+#########################################
+
+POST        /pacientes                          controllers.PacienteController.create()
+GET         /pacientes                          controllers.PacienteController.listAll()
+GET         /pacientes/:id                      controllers.PacienteController.findById(id:String)
+GET         /pacientes/historia/:id             controllers.PacienteController.findHistoriaById(id:String)
+
+#########################################
+# Medicos
+#########################################
+
+POST        /medicos                            controllers.MedicoController.create()
+GET         /medicos                            controllers.MedicoController.listAll()
+GET         /medicos/id/:id                     controllers.MedicoController.findById(id:String)
+GET         /medicos/name/:name                 controllers.MedicoController.findByName(name:String)
+GET         /medicos/registro/:register         controllers.MedicoController.findByRegistroMedico(register:Integer)
+GET         /medicos/pacientes/:id              controllers.MedicoController.findPacientes(id:String)
+DELETE      /medicos/:id                        controllers.MedicoController.deletePaciente(id:String)
+
+#########################################
+# Medicos Generales
+#########################################
+
+
+
+#########################################
+# Medicos Especialistas
+#########################################
+
+
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file           controllers.Assets.versioned(path="/public", file: Asset)
+GET         /loaderio-076a9fb09097659a1b6d846cba157944/   controllers.Application.loderIOApiKey()
