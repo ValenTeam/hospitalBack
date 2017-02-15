@@ -74,9 +74,15 @@ DELETE      /medicos/:id                        controllers.MedicoController.del
 
 
 
+
 #########################################
 # Medicos Especialistas
 #########################################
+
+POST        /medicosEspecialistas                           controllers.MedicoEspecialistaController.create()
+GET         /medicosEspecialistas                           controllers.MedicoEspecialistaController.listAll()
+PUT         /actualizarMarcapasos/:id                          controllers.MedicoEspecialistaController.changeValoresMarcapaso(id:String)
+
 
 
 

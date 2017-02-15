@@ -9,10 +9,14 @@ import java.util.List;
  */
 public class Medico extends IdObject {
 
+    public enum TipoMedico{
+        GENERAL, ESPECIALISTA
+    }
     private String name;
     private Integer registroMedico;
     private String empresaAfiliado;
     private List<Paciente> pacientes;
+    private TipoMedico tipoMedico;
 
 
     public String getName() {
@@ -34,5 +38,9 @@ public class Medico extends IdObject {
     public List<Paciente> getPacientes() {return pacientes;}
 
     public void setPacientes(List<Paciente> pacientes) {this.pacientes = pacientes;}
+
+    public TipoMedico getTipoMedico() {return tipoMedico;}
+
+    public void setTipoMedico(TipoMedico tipoMedico) {this.tipoMedico = tipoMedico;}
 }
 
