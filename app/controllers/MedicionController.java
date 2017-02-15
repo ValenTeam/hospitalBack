@@ -1,10 +1,14 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import controllers.base.EPController;
 import models.Medicion;
+import models.Paciente;
 import play.mvc.Result;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
+import util.EPJson;
+
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +40,19 @@ public class MedicionController extends EPController {
                insertMediciones();
         }
         return ok();
+    }
+
+    public Result listByPaciente(String patientId){
+        Iterable<Medicion> mediciones = medicosCrud.collection().find().limit(20).as(Medicion.class);
+        return ok( mediciones );
+    }
+
+    public Result listByPatientWithinDates(String patientId, Long date1, Long date2){
+        ObjectNode dateQuery = EPJson.object( "$gt", date1, "$lt", date2 );
+        String query = EPJson.object( "idPaciente", patientId,
+                "openTimestamp", dateQuery).toString();
+        Iterable<Medicion> mediciones = medicosCrud.collection().find( query ).as(Medicion.class);
+        return ok( query );
     }
 
     private synchronized static void insertMediciones(){
