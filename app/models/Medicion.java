@@ -10,7 +10,7 @@ import java.util.Date;
 public class Medicion extends IdObject {
 
     public enum TipoMedida{
-        CARDIACA, ARTERIAL, TEMPERATURA
+        CARDIACA, PRESION, ESTRES
     }
 
     private TipoMedida tipoMedicion;

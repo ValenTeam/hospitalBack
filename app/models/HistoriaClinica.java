@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class HistoriaClinica extends IdObject{
 
-    private List<ConcejoAutomatico> concejosAutomaticos;
+    private List<Consejo> consejos;
     private List<Emergencia> emergencias;
 
     public List<Emergencia> getEmergencias() {
@@ -20,11 +20,11 @@ public class HistoriaClinica extends IdObject{
         this.emergencias = emergencias;
     }
 
-    public List<ConcejoAutomatico> getConcejosAutomaticos() {
-        return concejosAutomaticos;
+    public List<Consejo> getConsejos() {
+        return consejos;
     }
 
-    public void setConcejosAutomaticos(List<ConcejoAutomatico> concejosAutomaticos) {
-        this.concejosAutomaticos = concejosAutomaticos;
+    public void setConcejosAutomaticos(List<Consejo> consejos) {
+        this.consejos = consejos;
     }
 }

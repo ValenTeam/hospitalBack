@@ -25,6 +25,8 @@ GET         /                                  controllers.Application.index()
 # Mediciones
 #########################################
 
+GET         /medicion/:patientId               controllers.MedicionController.listByPaciente(patientId:String)
+GET         /medicion/:patientId/dates/:d1/:d2 controllers.MedicionController.listByPatientWithinDates(patientId:String, d1:Long, d2:Long)
 POST        /medicion                          controllers.MedicionController.procesarMedicion()
 POST        /emergencia                        controllers.EmergenciaController.procesarEmergencia()
 
