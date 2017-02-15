@@ -81,7 +81,7 @@ DELETE      /medicos/:id                        controllers.MedicoController.del
 
 POST        /medicosEspecialistas                           controllers.MedicoEspecialistaController.create()
 GET         /medicosEspecialistas                           controllers.MedicoEspecialistaController.listAll()
-PUT         /actualizarMarcapasos/:id                          controllers.MedicoEspecialistaController.changeValoresMarcapaso(id:String)
+PUT         /a/:id                          controllers.MedicoEspecialistaController.changeValoresMarcapaso(id:String)
 
 
 
