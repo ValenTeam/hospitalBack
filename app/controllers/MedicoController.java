@@ -1,11 +1,16 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import controllers.base.EPController;
+import models.Consejo;
 import models.Medico;
 import models.Paciente;
 import play.mvc.Result;
 import util.EPJson;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -92,7 +97,32 @@ public class MedicoController extends EPController {
         {
             return error("no se ha podido eliminar el medico con id: "+id);
         }
-
-
     }
+    public Result createConsejo(String pacienteId, String medicoId){
+        JsonNode node = request().body().asJson();
+        JsonNode mensaje = node.get("msg");
+
+        Consejo consejo=new Consejo();
+        Paciente paciente = null;
+        Medico medicoG = null;
+        Date date = new Date();
+        DateFormat hour = new SimpleDateFormat("HH:mm:ss");
+        DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        String horaActual= hour.format(date);
+        String fechaActual = fecha.format(date);
+        try{
+            paciente = pacientesCrud.findById(pacienteId);
+            medicoG = medicosCrud.findById(medicoId);
+            consejo.setMensaje("********************************************\n\n"+"Hora: "+horaActual +" - " + "Fecha: " + fechaActual + "\n"
+            + "Hola: "+paciente.getName() + "  Hoy te hago las siguiente recomendacion para mejorar tu salud: " + "\n\n"
+            + mensaje + "\n\n" + "Cordialmente tú medico: " + medicoG.getName() + "\n\n" + "********************************************");
+
+            // FALTA PERSISTIR EL CONSEJO EN LA HISTORIA CLINICA
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return ok(consejo);
+    }
+
 }

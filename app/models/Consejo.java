@@ -5,7 +5,7 @@ import models.base.IdObject;
 /**
  * Created by Rogelio Garcia on 15-Feb-17.
  */
-public class Consejo extends IdObject{
+public class Consejo{
 
     public final static String m1 = "Se le recomienda acercarse a la clínica para recibir un diagnóstico " +
             "adecuado con su médico de cabecera. Si ya tiene un diagnóstico actualmente, recuerde ";
