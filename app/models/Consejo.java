@@ -5,7 +5,7 @@ import models.base.IdObject;
 /**
  * Created by Rogelio Garcia on 15-Feb-17.
  */
-public class Consejo extends IdObject{
+public class Consejo{
 
     private String mensaje;
     private long fecha;
