@@ -16,21 +16,8 @@ public class MedicoEspecialistaController extends EPController {
 
     public Result create(){
         MedicoEspecialista medicoE = bodyAs(MedicoEspecialista.class);
-        Medico medicoG= new Medico();
-        medicoG.setEmpresaAfiliado(medicoE.getEmpresaAfiliado());
-        medicoG.setName(medicoE.getName());
-        medicoG.setPacientes(medicoE.getPacientes());
-        medicoG.setRegistroMedico(medicoE.getRegistroMedico());
-        medicoG.setTipoMedico(Medico.TipoMedico.ESPECIALISTA);
-        medicoE.setTipoMedico(Medico.TipoMedico.ESPECIALISTA);
-        medicoG.setDeleted(false);
-        medicosEspecialistasCrud.save(medicoE);
-        medicosCrud.save(medicoG);
-        String idtmp = medicoG.getId();
-        medicoG.setId(medicoE.getId());
-        System.out.println(medicoG.getId() +"\n" + medicoE.getId());
-        medicosCrud.update(idtmp,medicoG);
-        System.out.println("Now: " +"\n"+medicoG.getId() +"\n" + medicoE.getId());
+        medicosEspecialistasCrud.save( medicoE );
+//        medicosCrud.save( medicoE );
         return ok(medicoE);
     }
 

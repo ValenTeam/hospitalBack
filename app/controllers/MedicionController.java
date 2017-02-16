@@ -33,15 +33,6 @@ public class MedicionController extends EPController {
         );
     }
 
-    public Result procesarMedicion() {
-        Medicion medicion = bodyAs(Medicion.class);
-        medsBuffer[bufferIndex++] = medicion;
-        if ( bufferIndex == BUFFER_SIZE ) {
-               insertMediciones();
-        }
-        return ok();
-    }
-
     public Result listByPaciente(String patientId){
         Iterable<Medicion> mediciones = medicosCrud.collection().find().limit(20).as(Medicion.class);
         return ok( mediciones );
@@ -53,6 +44,15 @@ public class MedicionController extends EPController {
                 "openTimestamp", dateQuery).toString();
         Iterable<Medicion> mediciones = medicosCrud.collection().find( query ).as(Medicion.class);
         return ok( query );
+    }
+
+    public Result procesarMedicion() {
+        Medicion medicion = bodyAs(Medicion.class);
+        medsBuffer[bufferIndex++] = medicion;
+        if ( bufferIndex == BUFFER_SIZE ) {
+               insertMediciones();
+        }
+        return ok();
     }
 
     private synchronized static void insertMediciones(){

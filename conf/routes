@@ -34,8 +34,8 @@ POST        /emergencia                        controllers.EmergenciaController.
 # Hospital
 #########################################
 
-POST        /hospital                          controllers.HospitalController.create()
 GET         /hospital                          controllers.HospitalController.listAll()
+POST        /hospital                          controllers.HospitalController.create()
 GET         /hospital/:id                      controllers.HospitalController.findById(id:String)
 GET         /hospital/name/:name               controllers.HospitalController.findByName(name:String)
 

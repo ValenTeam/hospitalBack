@@ -11,6 +11,7 @@ public class HistoriaClinica extends IdObject{
 
     private List<Consejo> consejos;
     private List<Emergencia> emergencias;
+    private List<Consulta> consultas;
 
     public List<Emergencia> getEmergencias() {
         return emergencias;
@@ -26,5 +27,17 @@ public class HistoriaClinica extends IdObject{
 
     public void setConcejosAutomaticos(List<Consejo> consejos) {
         this.consejos = consejos;
+    }
+
+    public void setConsejos(List<Consejo> consejos) {
+        this.consejos = consejos;
+    }
+
+    public List<Consulta> getConsultas() {
+        return consultas;
+    }
+
+    public void setConsultas(List<Consulta> consultas) {
+        this.consultas = consultas;
     }
 }

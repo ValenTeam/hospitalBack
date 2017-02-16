@@ -53,16 +53,13 @@ public class PacienteController extends EPController {
      * @return OK 200 if Paciente exists, 400 ERROR if it doesn't
      */
     public Result findHistoriaById(String id) {
-        Paciente paciente = null;
-        HistoriaClinica historia = null;
-        try {
-            paciente = pacientesCrud.findById(id);
-            historia = paciente.getHistoriaClinica();
-
-        } catch (Exception e) {
+        Paciente paciente = pacientesCrud.findById(id);
+        if (paciente == null)
             return error("Object does not exist", 400);
+        for (int i = 0; i < paciente.getHistoriaClinica().getConsejos().size(); i++) {
+            System.out.println( paciente.getHistoriaClinica().getConsejos().get(i));
         }
-        return ok(historia);
+        return ok( paciente.getHistoriaClinica() );
     }
 
 
