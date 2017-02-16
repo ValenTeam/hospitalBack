@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by je.ardila1501
@@ -99,6 +100,7 @@ public class MedicoController extends EPController {
         }
     }
     public Result createConsejo(String pacienteId, String medicoId){
+        
         JsonNode node = request().body().asJson();
         JsonNode mensaje = node.get("msg");
 
