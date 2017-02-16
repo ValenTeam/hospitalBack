@@ -2,6 +2,8 @@ package controllers;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import controllers.base.EPController;
+import models.Consejo;
+import models.HistoriaClinica;
 import models.Medicion;
 import models.Paciente;
 import play.mvc.Result;
@@ -10,7 +12,6 @@ import scala.concurrent.duration.FiniteDuration;
 import util.EPJson;
 
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,6 +34,36 @@ public class MedicionController extends EPController {
         );
     }
 
+    public Result procesarMedicion() {
+        Medicion medicion = bodyAs(Medicion.class);
+        medsBuffer[bufferIndex++] = medicion;
+        if(medicion.getColorMedicion().equals(Medicion.ColorMedicion.AMARILLO)){
+            Consejo consejo = new Consejo();
+            Medicion.TipoMedida tipoMedida = medicion.getTipoMedicion();
+            if (tipoMedida.equals(Medicion.TipoMedida.CARDIACA))
+                consejo.setMensaje( Consejo.m1 );
+            else if(tipoMedida.equals(Medicion.TipoMedida.ESTRES))
+                consejo.setMensaje( Consejo.m2 );
+            else if(tipoMedida.equals(Medicion.TipoMedida.PRESION))
+                consejo.setMensaje( Consejo.m3 );
+
+            Paciente paciente = pacientesCrud.findById( medicion.getIdPaciente() );
+            if (paciente.getHistoriaClinica() == null){
+                paciente.setHistoriaClinica( new HistoriaClinica() );
+                paciente.getHistoriaClinica().setConsejos( new ArrayList<Consejo>() );
+            } else if (paciente.getHistoriaClinica().getConsejos() == null){
+                paciente.getHistoriaClinica().setConsejos( new ArrayList<Consejo>() );
+            }
+
+            paciente.getHistoriaClinica().getConsejos().add( consejo );
+            pacientesCrud.save( paciente );
+        }
+        if ( bufferIndex == BUFFER_SIZE ) {
+            insertMediciones();
+        }
+        return ok();
+    }
+
     public Result listByPaciente(String patientId){
         Iterable<Medicion> mediciones = medicosCrud.collection().find().limit(20).as(Medicion.class);
         return ok( mediciones );
@@ -44,15 +75,6 @@ public class MedicionController extends EPController {
                 "openTimestamp", dateQuery).toString();
         Iterable<Medicion> mediciones = medicosCrud.collection().find( query ).as(Medicion.class);
         return ok( query );
-    }
-
-    public Result procesarMedicion() {
-        Medicion medicion = bodyAs(Medicion.class);
-        medsBuffer[bufferIndex++] = medicion;
-        if ( bufferIndex == BUFFER_SIZE ) {
-               insertMediciones();
-        }
-        return ok();
     }
 
     private synchronized static void insertMediciones(){

@@ -2,6 +2,7 @@ package models;
 
 import models.base.IdObject;
 
+import java.awt.*;
 import java.util.Date;
 
 /**
@@ -13,7 +14,12 @@ public class Medicion extends IdObject {
         CARDIACA, PRESION, ESTRES
     }
 
+    public enum ColorMedicion{
+        VERDE, AMARILLO, ROJO
+    }
+
     private TipoMedida tipoMedicion;
+    private ColorMedicion colorMedicion;
     private long valorMedicion;
     private String idPaciente;
     private long latitude;
@@ -24,9 +30,13 @@ public class Medicion extends IdObject {
         return tipoMedicion;
     }
 
+    public ColorMedicion getColorMedicion() {return colorMedicion;}
+
     public void setTipoMedicion(TipoMedida tipoMedicion) {
         this.tipoMedicion = tipoMedicion;
     }
+
+    public void setColorMedicion(ColorMedicion colorMedicion) {this.colorMedicion = colorMedicion;}
 
     public long getValorMedicion() {
         return valorMedicion;
