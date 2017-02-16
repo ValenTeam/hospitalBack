@@ -69,6 +69,7 @@ GET         /medicos/name/:name                 controllers.MedicoController.fin
 GET         /medicos/registro/:register         controllers.MedicoController.findByRegistroMedico(register:Integer)
 GET         /medicos/pacientes/:id              controllers.MedicoController.findPacientes(id:String)
 DELETE      /medicos/:id                        controllers.MedicoController.deletePaciente(id:String)
+POST         /b/:p/c/:d                         controllers.MedicoController.createConsejo(p:String, d:String)
 
 #########################################
 # Medicos Generales
