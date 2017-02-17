@@ -72,7 +72,7 @@ public class MedicionController extends EPController {
     public Result listByPatientWithinDates(String patientId, Long date1, Long date2){
         ObjectNode dateQuery = EPJson.object( "$gt", date1, "$lt", date2 );
         String query = EPJson.object( "idPaciente", patientId,
-                "openTimestamp", dateQuery).toString();
+                "openTimestamp", dateQuery).toString();  
         Iterable<Medicion> mediciones = medicionesCrud.collection().find( query ).as(Medicion.class);
         return ok( mediciones );
     }
