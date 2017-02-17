@@ -73,8 +73,8 @@ public class MedicionController extends EPController {
         ObjectNode dateQuery = EPJson.object( "$gt", date1, "$lt", date2 );
         String query = EPJson.object( "idPaciente", patientId,
                 "openTimestamp", dateQuery).toString();
-        Iterable<Medicion> mediciones = medicosCrud.collection().find( query ).as(Medicion.class);
-        return ok( query );
+        Iterable<Medicion> mediciones = medicionesCrud.collection().find( query ).as(Medicion.class);
+        return ok( mediciones );
     }
 
     private synchronized static void insertMediciones(){
