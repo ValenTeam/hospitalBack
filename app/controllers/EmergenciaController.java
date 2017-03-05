@@ -23,6 +23,10 @@ public class EmergenciaController extends EPController {
             paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
         }
 
+        if (paciente.getHistoriaClinica().getEmergencias() == null){
+            paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
+        }
+
         paciente.getHistoriaClinica().getEmergencias().add( emergencia );
         pacientesCrud.save( paciente );
         return ok( emergencia );

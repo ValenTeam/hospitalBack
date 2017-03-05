@@ -13,7 +13,7 @@ libraryDependencies ++= Seq(
   "org.jongo" % "jongo" % "1.3.0",
   "org.mongodb" % "bson" % "3.4.2",
   "uk.co.panaxiom" %% "play-jongo" % "1.0.1-jongo1.2",
-  "org.mongodb" % "mongo-java-driver" % "3.4.2",
+  "org.mongodb" % "mongo-java-driver" % "3.4.2",  
   javaWs
 )
 
