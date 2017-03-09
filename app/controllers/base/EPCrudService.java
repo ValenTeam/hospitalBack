@@ -37,7 +37,6 @@ public class EPCrudService<T extends IdObject> {
     public MongoCollection collection() {
         if (collection == null)
             collection = PlayJongo.getCollection(collectionName);
-
         return collection;
     }
 
