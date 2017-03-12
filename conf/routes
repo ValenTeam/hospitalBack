@@ -72,7 +72,7 @@ GET         /medicos/id/:id                     controllers.MedicoController.fin
 GET         /medicos/name/:name                 controllers.MedicoController.findByName(name:String)
 GET         /medicos/registro/:register         controllers.MedicoController.findByRegistroMedico(register:Integer)
 GET         /medicos/pacientes/:id              controllers.MedicoController.findPacientes(id:String)
-DELETE      /medicos/:id                        controllers.MedicoController.deletePaciente(id:String)
+DELETE      /medicos/:id                        controllers.MedicoController.delete(id:String)
 POST         /b/:p/c/:d                         controllers.MedicoController.createConsejo(p:String, d:String)
 
 #########################################

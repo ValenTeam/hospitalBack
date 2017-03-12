@@ -6,6 +6,7 @@ import models.Consejo;
 import models.HistoriaClinica;
 import models.Medicion;
 import models.Paciente;
+import play.libs.Json;
 import play.mvc.Result;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
@@ -35,7 +36,15 @@ public class MedicionController extends EPController {
     }
 
     public Result procesarMedicion() {
+//        System.out.println("INFO "+request().body().asJson();
+//        try {
+//            Medicion m =  Json.fromJson(request().body().asJson(), Medicion.class);
+//        } catch ( Exception e){
+//            e.printStackTrace();
+//        }
         Medicion medicion = bodyAs(Medicion.class);
+//        System.out.println(medicion.getIdPaciente());
+//        System.out.println(medicion.getValorMedicion());
         medsBuffer[bufferIndex++] = medicion;
         if(medicion.getColorMedicion().equals(Medicion.ColorMedicion.AMARILLO)){
             Consejo consejo = new Consejo();
@@ -61,7 +70,7 @@ public class MedicionController extends EPController {
         if ( bufferIndex == BUFFER_SIZE ) {
             insertMediciones();
         }
-        return ok();
+        return ok("OK");
     }
 
     public Result listByPaciente(String patientId){
