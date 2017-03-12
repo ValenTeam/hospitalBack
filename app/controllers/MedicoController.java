@@ -33,7 +33,8 @@ public class MedicoController extends EPController {
 
      */
     public Result listAll() {
-        Iterable<Medico> listaMedicos = medicosCrud.collection().find().as(Medico.class);
+        String query = EPJson.string("deleted", false);
+        Iterable<Medico> listaMedicos = medicosCrud.collection().find(query).as(Medico.class);
         return ok(listaMedicos);
     }
 
@@ -87,7 +88,7 @@ public class MedicoController extends EPController {
 
     }
 
-    public Result deletePaciente (String id)  {
+    public Result delete(String id)  {
         Medico medico = null;
         medico = medicosCrud.findById(id);
         try{

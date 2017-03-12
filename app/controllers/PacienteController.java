@@ -1,10 +1,12 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import controllers.base.EPController;
 import models.HistoriaClinica;
 import models.Marcapasos;
 import models.Paciente;
 import play.mvc.Result;
+import util.EPJson;
 
 /**
  * kjhfkjhfkhkhfdkhkdh
@@ -32,7 +34,8 @@ public class PacienteController extends EPController {
      * @return OK 200 with a list that may be empty if there are no pacientes.
      */
     public Result listAll() {
-        Iterable<Paciente> pacientes = pacientesCrud.collection().find().limit(100).as(Paciente.class);
+        String query = EPJson.string("deleted", false);
+        Iterable<Paciente> pacientes = pacientesCrud.collection().find(query).limit(100).as(Paciente.class);
         //Return a 200 response with all the hospitals serialized.
         return ok(pacientes);
     }
@@ -63,6 +66,32 @@ public class PacienteController extends EPController {
             return error("Object does not exist", 400);
         return ok( paciente.getHistoriaClinica() );
     }
+
+     /** Updates a paciente, we assume the request is done properly
+     * @return updated paciente object
+     */
+    public Result update(String id) {
+        Paciente paciente = bodyAs(Paciente.class);
+        pacientesCrud.update(id, paciente);
+        return ok(paciente);
+    }
+
+    /** Deletes a paciente, we assume the request is done properly
+     * @return ok  if the patient was deleted
+     */
+    public Result delete(String id)  {
+        Paciente paciente = null;
+        paciente = pacientesCrud.findById(id);
+        try{
+            pacientesCrud.delete(id);
+            return ok(paciente);
+        }
+        catch (Exception e)
+        {
+            return error("no se ha podido eliminar el paciente con id: "+id);
+        }
+    }
+
 
 
 

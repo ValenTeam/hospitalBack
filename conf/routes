@@ -57,6 +57,10 @@ POST        /pacientes                          controllers.PacienteController.c
 GET         /pacientes                          controllers.PacienteController.listAll()
 GET         /pacientes/:id                      controllers.PacienteController.findById(id:String)
 GET         /pacientes/historia/:id             controllers.PacienteController.findHistoriaById(id:String)
+PUT         /pacientes/:id                      controllers.PacienteController.update(id:String)
+DELETE     /pacientes/:id                      controllers.PacienteController.delete(id:String)
+
+
 
 #########################################
 # Medicos
@@ -69,7 +73,7 @@ GET         /medicos/name/:name                 controllers.MedicoController.fin
 GET         /medicos/registro/:register         controllers.MedicoController.findByRegistroMedico(register:Integer)
 GET         /medicos/pacientes/:id              controllers.MedicoController.findPacientes(id:String)
 DELETE      /medicos/:id                        controllers.MedicoController.deletePaciente(id:String)
-POST        /b/:p/c/:d                         controllers.MedicoController.createConsejo(p:String, d:String)
+POST         /b/:p/c/:d                         controllers.MedicoController.createConsejo(p:String, d:String)
 
 #########################################
 # Medicos Generales
@@ -84,7 +88,7 @@ POST        /b/:p/c/:d                         controllers.MedicoController.crea
 
 POST        /medicosEspecialistas                           controllers.MedicoEspecialistaController.create()
 GET         /medicosEspecialistas                           controllers.MedicoEspecialistaController.listAll()
-PUT         /a/:id                          controllers.MedicoEspecialistaController.changeValoresMarcapaso(id:String)
+PUT         /a/:id                                          controllers.MedicoEspecialistaController.changeValoresMarcapaso(id:String)
 
 
 
