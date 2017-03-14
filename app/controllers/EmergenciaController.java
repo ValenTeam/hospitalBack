@@ -45,22 +45,31 @@ public class EmergenciaController extends EPController {
     public Result procesarEmergencia(){
         Emergencia emergencia = bodyAs(Emergencia.class);
         emergencia.setProcessed(false);
-        emergenciasBuffer[bufferIndex++] = emergencia;
-        if ( bufferIndex == BUFFER_SIZE ) {
-            CompletableFuture.runAsync(() -> {
-                insertEmergencias();
-            });
+        synchronized (emergenciasBuffer){
+            emergenciasBuffer[bufferIndex++] = emergencia;
+            if ( bufferIndex == BUFFER_SIZE ) {
+                CompletableFuture.runAsync(() -> {
+                    insertEmergencias();
+                });
+            }
         }
         return ok( "processed" );
     }
 
     private static void insertEmergencias(){
         System.out.println("SAVING");
-        if (bufferIndex != BUFFER_SIZE && bufferIndex != 0)
-            emergenciasCrud.collection().insert( Arrays.copyOf(emergenciasBuffer, bufferIndex) );
-        else if (bufferIndex == BUFFER_SIZE)
-            emergenciasCrud.collection().insert(emergenciasBuffer);
-        bufferIndex = 0;
+        Emergencia [] emr;
+        int index;
+        synchronized (emergenciasBuffer){
+            index = bufferIndex;
+            emr = new Emergencia[bufferIndex];
+            System.arraycopy( emergenciasBuffer, 0, emr, 0, bufferIndex);
+            bufferIndex = 0;
+        }
+        if (index != BUFFER_SIZE && index != 0)
+            emergenciasCrud.collection().insert( Arrays.copyOf(emr, index) );
+        else if (index == BUFFER_SIZE)
+            emergenciasCrud.collection().insert(emr);
     }
 
     private static void insertEmergenciesIntoPacientes(){
