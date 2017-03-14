@@ -24,7 +24,7 @@ public class EmergenciaController extends EPController {
 
     static{
         FiniteDuration duration = Duration.create((long) 10, TimeUnit.SECONDS);
-        FiniteDuration interval = Duration.create((long) 2, TimeUnit.MINUTES);
+        FiniteDuration interval = Duration.create((long) 5, TimeUnit.SECONDS);
         play.libs.Akka.system().scheduler().schedule(
                 duration, interval,
                 () -> {
@@ -35,6 +35,7 @@ public class EmergenciaController extends EPController {
 
     public Result procesarEmergencia(){
         Emergencia emergencia = bodyAs(Emergencia.class);
+        emergencia.setProcessed(false);
 //        emergenciasCrud.save( emergencia );
         emergenciasBuffer[bufferIndex++] = emergencia;
 
@@ -46,8 +47,31 @@ public class EmergenciaController extends EPController {
         return ok( emergencia );
     }
 
-    private synchronized static void insertEmergencias(){
-        for (int i = 0; i < emergenciasBuffer.length; i++) {
+    private static void insertEmergencias(){
+        System.out.println("SAVING");
+        for (int i = 0; i < emergenciasBuffer.length && emergenciasBuffer[i] != null; i++) {
+            Paciente paciente = pacientesCrud.findById( emergenciasBuffer[i].getPatientId() );
+            if (paciente.getHistoriaClinica() == null){
+                paciente.setHistoriaClinica( new HistoriaClinica() );
+                paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
+            }
+
+            if (paciente.getHistoriaClinica().getEmergencias() == null){
+                paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
+            }
+            paciente.getHistoriaClinica().getEmergencias().add( emergenciasBuffer[i] );
+            pacientesCrud.save( paciente );
+        }
+        if (bufferIndex != BUFFER_SIZE && bufferIndex != 0)
+            emergenciasCrud.collection().insert( Arrays.copyOf(emergenciasBuffer, bufferIndex) );
+        else if (bufferIndex == BUFFER_SIZE)
+            emergenciasCrud.collection().insert(emergenciasBuffer);
+        bufferIndex = 0;
+    }
+
+    private static void insertEmergenciesIntoPacientes(){
+        System.out.println("SAVING");
+        for (int i = 0; i < emergenciasBuffer.length && emergenciasBuffer[i] != null; i++) {
             Paciente paciente = pacientesCrud.findById( emergenciasBuffer[i].getPatientId() );
             if (paciente.getHistoriaClinica() == null){
                 paciente.setHistoriaClinica( new HistoriaClinica() );
