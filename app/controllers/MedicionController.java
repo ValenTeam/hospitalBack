@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class MedicionController extends EPController {
 
-    private final static int BUFFER_SIZE = 879900;
+    private final static int BUFFER_SIZE = 300000;
     private static Medicion [] medsBuffer = new Medicion[BUFFER_SIZE];
     private static int bufferIndex = 0;
 

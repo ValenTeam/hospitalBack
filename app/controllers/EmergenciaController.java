@@ -7,9 +7,11 @@ import models.Paciente;
 import play.mvc.Result;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
+import util.EPJson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -18,17 +20,24 @@ import java.util.concurrent.TimeUnit;
  */
 public class EmergenciaController extends EPController {
 
-    private final static int BUFFER_SIZE = 3000;
+    private final static int BUFFER_SIZE = 300000;
     private static Emergencia[] emergenciasBuffer = new Emergencia[BUFFER_SIZE];
     private static int bufferIndex = 0;
 
     static{
-        FiniteDuration duration = Duration.create((long) 10, TimeUnit.SECONDS);
-        FiniteDuration interval = Duration.create((long) 5, TimeUnit.SECONDS);
+        FiniteDuration duration = Duration.create((long) 5, TimeUnit.SECONDS);
+        FiniteDuration interval = Duration.create((long) 500, TimeUnit.MILLISECONDS);
         play.libs.Akka.system().scheduler().schedule(
                 duration, interval,
                 () -> {
                     insertEmergencias();
+                }, play.libs.Akka.system().dispatcher()
+        );
+        interval = Duration.create((long) 10, TimeUnit.MINUTES);
+        play.libs.Akka.system().scheduler().schedule(
+                duration, interval,
+                () -> {
+                    insertEmergenciesIntoPacientes();
                 }, play.libs.Akka.system().dispatcher()
         );
     }
@@ -36,32 +45,17 @@ public class EmergenciaController extends EPController {
     public Result procesarEmergencia(){
         Emergencia emergencia = bodyAs(Emergencia.class);
         emergencia.setProcessed(false);
-//        emergenciasCrud.save( emergencia );
         emergenciasBuffer[bufferIndex++] = emergencia;
-
         if ( bufferIndex == BUFFER_SIZE ) {
             CompletableFuture.runAsync(() -> {
                 insertEmergencias();
             });
         }
-        return ok( emergencia );
+        return ok( "processed" );
     }
 
     private static void insertEmergencias(){
         System.out.println("SAVING");
-        for (int i = 0; i < emergenciasBuffer.length && emergenciasBuffer[i] != null; i++) {
-            Paciente paciente = pacientesCrud.findById( emergenciasBuffer[i].getPatientId() );
-            if (paciente.getHistoriaClinica() == null){
-                paciente.setHistoriaClinica( new HistoriaClinica() );
-                paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
-            }
-
-            if (paciente.getHistoriaClinica().getEmergencias() == null){
-                paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
-            }
-            paciente.getHistoriaClinica().getEmergencias().add( emergenciasBuffer[i] );
-            pacientesCrud.save( paciente );
-        }
         if (bufferIndex != BUFFER_SIZE && bufferIndex != 0)
             emergenciasCrud.collection().insert( Arrays.copyOf(emergenciasBuffer, bufferIndex) );
         else if (bufferIndex == BUFFER_SIZE)
@@ -70,25 +64,24 @@ public class EmergenciaController extends EPController {
     }
 
     private static void insertEmergenciesIntoPacientes(){
-        System.out.println("SAVING");
-        for (int i = 0; i < emergenciasBuffer.length && emergenciasBuffer[i] != null; i++) {
-            Paciente paciente = pacientesCrud.findById( emergenciasBuffer[i].getPatientId() );
+        System.out.println("LONG");
+        String query = EPJson.string("processed",false);
+        Iterator<Emergencia> emergencias = emergenciasCrud.collection().find(query).as(Emergencia.class).iterator();
+        while (emergencias.hasNext()){
+            Emergencia emergencia = emergencias.next();
+            emergencia.setProcessed(true);
+            Paciente paciente = pacientesCrud.findById( emergencia.getPatientId() );
             if (paciente.getHistoriaClinica() == null){
                 paciente.setHistoriaClinica( new HistoriaClinica() );
                 paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
             }
-
             if (paciente.getHistoriaClinica().getEmergencias() == null){
                 paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
             }
-            paciente.getHistoriaClinica().getEmergencias().add( emergenciasBuffer[i] );
+            paciente.getHistoriaClinica().getEmergencias().add( emergencia );
             pacientesCrud.save( paciente );
+            emergenciasCrud.save(emergencia);
         }
-        if (bufferIndex != BUFFER_SIZE && bufferIndex != 0)
-            emergenciasCrud.collection().insert( Arrays.copyOf(emergenciasBuffer, bufferIndex) );
-        else if (bufferIndex == BUFFER_SIZE)
-            emergenciasCrud.collection().insert(emergenciasBuffer);
-        bufferIndex = 0;
     }
 
 }
