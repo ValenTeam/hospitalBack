@@ -1,19 +1,16 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
 import controllers.base.EPController;
 import models.Consejo;
 import models.Medico;
 import models.Paciente;
 import play.mvc.Result;
 import util.EPJson;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by je.ardila1501
