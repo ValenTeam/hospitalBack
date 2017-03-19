@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
 import controllers.base.EPController;
 import models.Consejo;
 import models.Medico;
@@ -48,6 +49,17 @@ public class MedicoController extends EPController {
             return error("Object does not exist", 400);
         }
         return ok(medico);
+    }
+
+    public Result test() {
+        try{
+            Thread.sleep(2000);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        String query = EPJson.string("deleted", false);
+        Iterable<Medico> listaMedicos = medicosCrud.collection().find(query).as(Medico.class);
+        return ok(listaMedicos);
     }
 
     /*
