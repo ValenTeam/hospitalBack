@@ -57,7 +57,6 @@ public class EmergenciaController extends EPController {
     }
 
     private static void insertEmergencias(){
-        System.out.println("SAVING");
         Emergencia [] emr;
         int index;
         synchronized (emergenciasBuffer){
