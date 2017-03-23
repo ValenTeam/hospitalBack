@@ -18,6 +18,9 @@ public class Medicion extends IdObject {
         VERDE, AMARILLO, ROJO
     }
 
+
+    
+
     private TipoMedida tipoMedicion;
     private ColorMedicion colorMedicion;
     private long valorMedicion;
