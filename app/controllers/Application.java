@@ -15,7 +15,7 @@ import java.io.File;
 public class Application extends Controller {
 
     public Result index() {
-        return ok(new File("public/main/index.html"), true);
+        return ok("LISTO CORRIENDO");
     }
 
     public Result loderIOApiKey(){
