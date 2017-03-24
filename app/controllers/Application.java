@@ -19,7 +19,7 @@ public class Application extends Controller {
     }
 
     public Result loderIOApiKey(){
-        return Results.ok("loaderio-076a9fb09097659a1b6d846cba157944");
+        return Results.ok("loaderio-8a636c602445e3b59cd5cd8045e80043");
     }
 
 }
