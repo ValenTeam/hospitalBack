@@ -19,7 +19,7 @@ public class Medicion extends IdObject {
     }
 
 
-    
+
 
     private TipoMedida tipoMedicion;
     private ColorMedicion colorMedicion;
