@@ -1,10 +1,12 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.pac4j.play.java.Secure;
 import play.*;
 import play.libs.Json;
 import play.mvc.*;
 
+import util.Auth;
 import views.html.*;
 
 import java.io.File;
@@ -18,6 +20,7 @@ public class Application extends Controller {
         return ok(new File("public/main/index.html"), true);
     }
 
+    @With(Auth.class)
     public Result loderIOApiKey(){
         return Results.ok("loaderio-11abdaba767352016f8aa9a2ab72b8d7");
     }
