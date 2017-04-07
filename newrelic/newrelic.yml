@@ -94,12 +94,12 @@ common: &default_settings
 
   # Proxy settings for connecting to the New Relic server:
   # If a proxy is used, the host setting is required.  Other settings
-  # are optional.  Default port is 8080.  The username and password
+  # are optional.  Default port is 8080.  The email and password
   # settings will be used to authenticate to Basic Auth challenges
   # from a proxy server.
   #proxy_host: hostname
   #proxy_port: 8080
-  #proxy_user: username
+  #proxy_user: email
   #proxy_password: password
 
   # Limits the number of lines to capture for each stack trace. 

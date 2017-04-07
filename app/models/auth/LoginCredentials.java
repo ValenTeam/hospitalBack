@@ -6,18 +6,31 @@ package models.auth;
  */
 public class LoginCredentials {
 
-    private String username;
+    public enum UserRole {
+        admin, medico, paciente, medicoJefe;
+    }
+
+    private UserRole role;
+
+    private String email;
 
     private String password;
 
-    public String getUsername() {
-        return username;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPassword() {
         return password;

@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import controllers.auth.AuthenticationController;
 import controllers.base.EPController;
 import models.Consejo;
 import models.Medico;
@@ -23,6 +24,7 @@ public class MedicoController extends EPController {
      */
     public Result create(){
         Medico medico = bodyAs(Medico.class);
+        medico.setPassword(AuthenticationController.getPasswordHash(medico.getEmail(), medico.getPassword()));
         medicosCrud.save(medico);
         return ok(medico);
     }
