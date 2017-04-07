@@ -18,9 +18,6 @@ public class Medicion extends IdObject {
         VERDE, AMARILLO, ROJO
     }
 
-
-
-
     private TipoMedida tipoMedicion;
     private ColorMedicion colorMedicion;
     private long valorMedicion;
@@ -28,6 +25,15 @@ public class Medicion extends IdObject {
     private long latitude;
     private long longitude;
     private long openTimestamp;
+    private String digest;
+
+    public String getDigest() {
+        return digest;
+    }
+
+    public void setDigest(String digest) {
+        this.digest = digest;
+    }
 
     public TipoMedida getTipoMedicion() {
         return tipoMedicion;
