@@ -10,13 +10,14 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
 
+import javax.swing.*;
 import java.math.BigInteger;
 import java.util.Random;
 
 /**
  * Created by felipeplazas on 4/2/17.
  */
-public class Auth extends Action.Simple {
+public class Auth extends Action.Simple{
 
     protected static final EPCrudService<Medico> medicosCrud = new EPCrudService<>("medicos", Medico.class);
     @Override

@@ -39,4 +39,7 @@ public class UserGroup extends IdObject{
         if (permissions == null) permissions = new ArrayList<String>();
         permissions.add(permission);
     }
+
+
+
 }
