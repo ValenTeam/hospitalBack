@@ -9,10 +9,12 @@ import models.Paciente;
 import org.apache.commons.codec.binary.Hex;
 import play.libs.Json;
 import play.mvc.Result;
+import play.mvc.With;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
 import util.EPJson;
 import util.SecurityManager;
+import util.TokenAuth;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -78,7 +80,7 @@ public class MedicionController extends EPController {
         return ok("OK");
     }
 
-
+    @With(TokenAuth.class)
     public Result listByPaciente(String patientId){
         Iterable<Medicion> mediciones = medicosCrud.collection().find().limit(20).as(Medicion.class);
         return ok( mediciones );

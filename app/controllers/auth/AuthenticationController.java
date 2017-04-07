@@ -10,16 +10,39 @@ import models.base.IdObject;
 import models.base.UserObject;
 import org.apache.commons.codec.binary.Hex;
 import play.mvc.Result;
+import scala.concurrent.duration.Duration;
+import scala.concurrent.duration.FiniteDuration;
 import util.EPJson;
 import util.SecurityManager;
-
 import java.security.MessageDigest;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by felipeplazas on 4/6/17.
  */
 public class AuthenticationController extends EPController {
 
+    static{
+        FiniteDuration duration = Duration.create((long) 5, TimeUnit.SECONDS);
+        FiniteDuration interval = Duration.create((long) 1, TimeUnit.MINUTES);
+        play.libs.Akka.system().scheduler().schedule(
+                duration, interval,
+                () -> {
+                    checkTokenTimestamps();
+                }, play.libs.Akka.system().dispatcher()
+        );
+    }
+
+    private static void checkTokenTimestamps(){
+        try {
+            System.out.println("Checking tokens");
+            long currentTime = System.currentTimeMillis();
+            Iterable<SessionToken> it = tokensCrud.collection().find().as(SessionToken.class);
+            for (SessionToken st : it)
+                if (currentTime > st.getExpireTimeStamp())
+                    tokensCrud.hardDelete("_id",st.getId());
+        } catch (Exception e){ e.printStackTrace();}
+    }
 
     public Result userLogIn(){
         try {

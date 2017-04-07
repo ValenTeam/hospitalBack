@@ -15,10 +15,10 @@ import util.TokenAuth;
  */
 public class AdminController extends EPController {
 
-//    @With(TokenAuth.class)
+    @With(TokenAuth.class)
     public Result create(){
         try{
-//            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
             UserObject user = bodyAs(UserObject.class);
             user.setPassword(AuthenticationController.getPasswordHash(user.getEmail(), user.getPassword()));
             return ok( adminCrud.save(user));

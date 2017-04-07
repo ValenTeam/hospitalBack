@@ -20,7 +20,6 @@ public class SecurityManager {
     protected static final EPCrudService<UserGroup> userGroupsCrud = new EPCrudService<>("userGroups", UserGroup.class);
 
     public static boolean validatePermission(String permission, String userGroup) throws Exception{
-        System.out.println(permission+"-"+userGroup);
         UserGroup ug = userGroupsCrud.collection().findOne(EPJson.string("name", userGroup)).as(UserGroup.class);
         if (ug.hasPermission(permission) || ug.getName().equals("admins")) return true;
         else
