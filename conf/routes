@@ -63,7 +63,7 @@ GET         /pacientes                          controllers.PacienteController.l
 GET         /pacientes/:id                      controllers.PacienteController.findById(id:String)
 GET         /pacientes/historia/:id             controllers.PacienteController.findHistoriaById(id:String)
 PUT         /pacientes/:id                      controllers.PacienteController.update(id:String)
-DELETE     /pacientes/:id                      controllers.PacienteController.delete(id:String)
+DELETE      /pacientes/:id                      controllers.PacienteController.delete(id:String)
 
 
 

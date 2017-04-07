@@ -23,17 +23,17 @@ public class PacienteController extends EPController {
      * Creates a paciente, we assume the request is done properly
      * @return created paciente object
      */
+    @With(TokenAuth.class)
     public Result create() {
-        Paciente paciente = bodyAs(Paciente.class);
-        paciente.setPassword(AuthenticationController.getPasswordHash(paciente.getEmail(), paciente.getPassword()));
-        pacientesCrud.save(paciente);
-        return ok(paciente);
-    }
-
-    public Result actualizar (String id){
-        Paciente paciente = bodyAs(Paciente.class);
-        pacientesCrud.save(paciente);
-        return  ok( paciente );
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            Paciente paciente = bodyAs(Paciente.class);
+            paciente.setPassword(AuthenticationController.getPasswordHash(paciente.getEmail(), paciente.getPassword()));
+            pacientesCrud.save(paciente);
+            return ok(paciente);
+        } catch (Exception e){
+            return error(e.getMessage());
+        }
     }
 
     /**
@@ -84,10 +84,16 @@ public class PacienteController extends EPController {
      /** Updates a paciente, we assume the request is done properly
      * @return updated paciente object
      */
+     @With(TokenAuth.class)
     public Result update(String id) {
-        Paciente paciente = bodyAs(Paciente.class);
-        pacientesCrud.update(id, paciente);
-        return ok(paciente);
+        try{
+            SecurityManager.validatePermission("edit-patient", (Http.Context.current.get().flash().get("token")));
+            Paciente paciente = bodyAs(Paciente.class);
+            pacientesCrud.update(id, paciente);
+            return ok(paciente);
+        } catch (Exception e){
+            return error(e.getMessage());
+        }
     }
 
     /** Deletes a paciente, we assume the request is done properly

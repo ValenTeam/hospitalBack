@@ -20,48 +20,29 @@ public class UserGroupController extends EPController {
 
 
     public Result deletePermission(String permission, String idGroup)  {
-
-        UserGroup userGroup = null;
-        userGroup=userGroupsCrud.findById(idGroup);
-        List<String> permissionList = userGroup.getPermissions();
-        boolean find=false;
-        try{
-            for (int i = 0; i < permissionList.size()&&!find; i++) {
-                String perm = permissionList.get(i);
-                if(permission.equals(perm)){
-                    permissionList.remove(perm);
-                    find=true;
-                }
-
-            }
-            return ok(userGroup);
-        }
-        catch (Exception e) {return error("no se ha podido eliminar el permiso: ");}
+        UserGroup userGroup = userGroupsCrud.findById(idGroup);
+        userGroup.getPermissions().remove(permission);
+        userGroupsCrud.save(userGroup);
+        return ok(userGroup);
     }
 
     public Result addPermission(String permission, String idGroup){
-        UserGroup userGroup = null;
-        userGroup=userGroupsCrud.findById(idGroup);
+        UserGroup userGroup = userGroupsCrud.findById(idGroup);
         userGroup.addPermission(permission);
+        userGroupsCrud.save(userGroup);
         return ok(permission);
     }
 
     public Result listPermissionsGroup(String idGroup){
-        UserGroup userGroup = null;
-        userGroup=userGroupsCrud.findById(idGroup);
-
-        if (userGroup == null) {
+        UserGroup userGroup = userGroupsCrud.findById(idGroup);
+        if (userGroup == null)
             return error("Object does not exist", 400);
-        }
-        if (userGroup.getPermissions()==null){
-            return error("el grupo no tiene permisos");
-        }
+        if (userGroup.getPermissions()==null)
+            return error("El grupo no tiene permisos");
         else{
-            List<String> listaPermissions=null;
-            listaPermissions=userGroup.getPermissions();
+            List<String> listaPermissions= userGroup.getPermissions();
             return ok(listaPermissions);
         }
-
     }
 
     public Result delete(String id)  {
