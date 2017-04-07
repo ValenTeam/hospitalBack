@@ -10,6 +10,9 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
 
+import java.math.BigInteger;
+import java.util.Random;
+
 /**
  * Created by felipeplazas on 4/2/17.
  */
@@ -37,4 +40,5 @@ public class Auth extends Action.Simple {
         }
         return null;
     }
+
 }
