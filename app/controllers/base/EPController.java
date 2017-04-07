@@ -6,6 +6,7 @@ import com.mongodb.MongoClient;
 import models.*;
 import models.auth.SessionToken;
 import models.auth.UserGroup;
+import models.base.UserObject;
 import org.jongo.Jongo;
 import org.jongo.MongoCursor;
 import play.Application;
@@ -45,6 +46,7 @@ public class EPController extends Controller {
     protected static final EPCrudService<Emergencia> emergenciasCrud = new EPCrudService<>("emergencias", Emergencia.class);
     protected static final EPCrudService<SessionToken> tokensCrud = new EPCrudService<>("sessionTokens", SessionToken.class);
     protected static final EPCrudService<UserGroup> userGroupsCrud = new EPCrudService<>("userGroups", UserGroup.class);
+    protected static final EPCrudService<UserObject> adminCrud = new EPCrudService<>("admins", UserObject.class);
 
 
 

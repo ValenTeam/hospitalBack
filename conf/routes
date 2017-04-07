@@ -24,6 +24,7 @@ POST        /login                             controllers.auth.AuthenticationCo
 #########################################
 
 GET         /                                  controllers.Application.index()
+POST        /admin                             controllers.AdminController.create()
 
 #########################################
 # Mediciones

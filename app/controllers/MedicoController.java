@@ -6,8 +6,13 @@ import controllers.base.EPController;
 import models.Consejo;
 import models.Medico;
 import models.Paciente;
+import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.With;
 import util.EPJson;
+import util.SecurityManager;
+import util.TokenAuth;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,32 +27,50 @@ public class MedicoController extends EPController {
     /*
 
      */
+    @With(TokenAuth.class)
     public Result create(){
-        Medico medico = bodyAs(Medico.class);
-        medico.setPassword(AuthenticationController.getPasswordHash(medico.getEmail(), medico.getPassword()));
-        medicosCrud.save(medico);
-        return ok(medico);
-    }
-
-    /*
-
-     */
-    public Result listAll() {
-        String query = EPJson.string("deleted", false);
-        Iterable<Medico> listaMedicos = medicosCrud.collection().find(query).as(Medico.class);
-        return ok(listaMedicos);
-    }
-
-    /*
-
-     */
-    public Result findById(String id) {
-        Medico medico = null;
-        medico = medicosCrud.findById(id);
-        if (medico == null){
-            return error("Object does not exist", 400);
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            Medico medico = bodyAs(Medico.class);
+            medico.setPassword(AuthenticationController.getPasswordHash(medico.getEmail(), medico.getPassword()));
+            medicosCrud.save(medico);
+            return ok(medico);
+        } catch (Exception e){
+            return error(e.getMessage());
         }
-        return ok(medico);
+    }
+
+    /*
+
+     */
+    @With(TokenAuth.class)
+    public Result listAll() {
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            String query = EPJson.string("deleted", false);
+            Iterable<Medico> listaMedicos = medicosCrud.collection().find(query).as(Medico.class);
+            return ok(listaMedicos);
+        } catch (Exception e){
+            return error(e.getMessage());
+        }
+    }
+
+    /*
+
+     */
+    @With(TokenAuth.class)
+    public Result findById(String id) {
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            Medico medico = null;
+            medico = medicosCrud.findById(id);
+            if (medico == null){
+                return error("Object does not exist", 400);
+            }
+            return ok(medico);
+        } catch (Exception e){
+            return error(e.getMessage());
+        }
     }
 
     public Result test() {
@@ -64,19 +87,42 @@ public class MedicoController extends EPController {
     /*
 
      */
+    @With(TokenAuth.class)
     public Result findByName(String name) {
-        String query = EPJson.object("name", name).toString();
-        Iterable<Medico> medicos = medicosCrud.collection().find(query).as(Medico.class);
-        return ok(medicos);
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            String query = EPJson.object("name", name).toString();
+            Iterable<Medico> medicos = medicosCrud.collection().find(query).as(Medico.class);
+            return ok(medicos);
+        } catch (Exception e){
+            return error(e.getMessage());
+        }
     }
 
     /*
 
      */
+    @With(TokenAuth.class)
     public Result findByRegistroMedico(Integer registro) {
-        String query = EPJson.object("registroMedico", registro).toString();
-        Iterable<Medico> medicos = medicosCrud.collection().find(query).as(Medico.class);
-        return ok(medicos);
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            String query = EPJson.object("registroMedico", registro).toString();
+            Iterable<Medico> medicos = medicosCrud.collection().find(query).as(Medico.class);
+            return ok(medicos);
+        } catch (Exception e){
+            return error(e.getMessage());
+        }
+    }
+
+    @With(TokenAuth.class)
+    public Result delete(String id)  {
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            medicosCrud.delete(id);
+            return ok(id);
+        } catch (Exception e){
+            return error(e.getMessage());
+        }
     }
 
     /*
@@ -99,18 +145,6 @@ public class MedicoController extends EPController {
 
     }
 
-    public Result delete(String id)  {
-        Medico medico = null;
-        medico = medicosCrud.findById(id);
-        try{
-            medicosCrud.delete(id);
-            return ok(medico);
-        }
-        catch (Exception e)
-        {
-            return error("no se ha podido eliminar el medico con id: "+id);
-        }
-    }
     public Result createConsejo(String pacienteId, String medicoId){
 
         JsonNode node = request().body().asJson();

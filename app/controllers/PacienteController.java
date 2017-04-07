@@ -1,12 +1,18 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import controllers.auth.AuthenticationController;
 import controllers.base.EPController;
 import models.HistoriaClinica;
 import models.Marcapasos;
+import models.Medico;
 import models.Paciente;
+import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.With;
 import util.EPJson;
+import util.SecurityManager;
+import util.TokenAuth;
 
 /**
  * kjhfkjhfkhkhfdkhkdh
@@ -19,6 +25,7 @@ public class PacienteController extends EPController {
      */
     public Result create() {
         Paciente paciente = bodyAs(Paciente.class);
+        paciente.setPassword(AuthenticationController.getPasswordHash(paciente.getEmail(), paciente.getPassword()));
         pacientesCrud.save(paciente);
         return ok(paciente);
     }
@@ -45,14 +52,21 @@ public class PacienteController extends EPController {
      * @param id
      * @return OK 200 if Paciente exists, 400 ERROR if it doesn't
      */
+    @With(TokenAuth.class)
     public Result findById(String id) {
-        Paciente paciente = null;
-        try {
-            paciente = pacientesCrud.findById(id);
-        } catch (Exception e) {
-            return error("Object does not exist", 400);
+        try{
+            SecurityManager.validatePermission("view-patient", (Http.Context.current.get().flash().get("token")));
+            Paciente paciente = null;
+            try {
+                paciente = pacientesCrud.findById(id);
+            } catch (Exception e) {
+                return error("Object does not exist", 400);
+            }
+            return ok(paciente);
+        } catch (Exception e){
+            return error(e.getMessage());
         }
-        return ok(paciente);
+
     }
 
     /**

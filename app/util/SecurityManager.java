@@ -1,5 +1,8 @@
 package util;
 
+import controllers.base.EPCrudService;
+import models.auth.UserGroup;
+
 import javax.crypto.Mac;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -13,6 +16,15 @@ import java.util.Random;
  * Created by felipeplazas on 4/6/17.
  */
 public class SecurityManager {
+
+    protected static final EPCrudService<UserGroup> userGroupsCrud = new EPCrudService<>("userGroups", UserGroup.class);
+
+    public static boolean validatePermission(String permission, String userGroup) throws Exception{
+        UserGroup ug = userGroupsCrud.collection().findOne(EPJson.string("name", userGroup)).as(UserGroup.class);
+        if (ug.hasPermission(permission) || ug.getName().equals("admins")) return true;
+        else
+            throw new Exception("You do not have enough permissions to execute this task.");
+    }
 
     public static byte[] hashDigest(byte[] message) {
         try {

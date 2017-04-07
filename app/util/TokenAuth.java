@@ -1,41 +1,34 @@
 package util;
 
-<<<<<<< HEAD
+import controllers.Application;
 import controllers.base.EPCrudService;
 import models.Hospital;
 import models.Medicion;
 import models.Medico;
+import models.auth.SessionToken;
 import play.libs.F;
 import play.mvc.Action;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
 
-import javax.swing.*;
 import java.math.BigInteger;
 import java.util.Random;
-=======
-import play.mvc.With;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
->>>>>>> eeac3370384544ec9b06940d2c1bcdd7afe34986
 
 /**
- * Created by felipeplazas on 4/7/17.
+ * Created by felipeplazas on 4/2/17.
  */
-<<<<<<< HEAD
-public class Auth extends Action.Simple{
+public class TokenAuth extends Action.Simple {
 
-    protected static final EPCrudService<Medico> medicosCrud = new EPCrudService<>("medicos", Medico.class);
+    protected static final EPCrudService<SessionToken> tokensCrud = new EPCrudService<>("sessionTokens", SessionToken.class);
+
     @Override
     public F.Promise<Result> call(Http.Context ctx) throws Throwable {
         String token = getTokenFromHeader(ctx);
         if (token != null) {
-            Medico user = medicosCrud.collection().findOne().as(Medico.class);
-            if (user != null) {
-                ctx.request().withUsername(user.getId());
+            SessionToken sessionToken = tokensCrud.collection().findOne(EPJson.string("token", token)).as(SessionToken.class);
+            if (sessionToken != null) {
+                ctx.flash().put("token", sessionToken.getUserGroup());
                 return delegate.call(ctx);
             }
         }
@@ -52,11 +45,3 @@ public class Auth extends Action.Simple{
     }
 
 }
-=======
-@With(TokenAuth.class)
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Auth {
-    String value() default "";
-}
->>>>>>> eeac3370384544ec9b06940d2c1bcdd7afe34986

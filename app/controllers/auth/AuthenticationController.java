@@ -6,15 +6,14 @@ import models.Medico;
 import models.Paciente;
 import models.auth.LoginCredentials;
 import models.auth.SessionToken;
-import models.auth.UserGroup;
 import models.base.IdObject;
 import models.base.UserObject;
 import org.apache.commons.codec.binary.Hex;
 import play.mvc.Result;
-import util.Auth;
+import scala.concurrent.duration.Duration;
+import scala.concurrent.duration.FiniteDuration;
 import util.EPJson;
 import util.SecurityManager;
-
 import java.security.MessageDigest;
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +22,27 @@ import java.util.concurrent.TimeUnit;
  */
 public class AuthenticationController extends EPController {
 
+    static{
+        FiniteDuration duration = Duration.create((long) 5, TimeUnit.SECONDS);
+        FiniteDuration interval = Duration.create((long) 1, TimeUnit.MINUTES);
+        play.libs.Akka.system().scheduler().schedule(
+                duration, interval,
+                () -> {
+                    checkTokenTimestamps();
+                }, play.libs.Akka.system().dispatcher()
+        );
+    }
+
+    private static void checkTokenTimestamps(){
+        try {
+            System.out.println("Checking tokens");
+            long currentTime = System.currentTimeMillis();
+            Iterable<SessionToken> it = tokensCrud.collection().find().as(SessionToken.class);
+            for (SessionToken st : it)
+                if (currentTime > st.getExpireTimeStamp())
+                    tokensCrud.hardDelete("_id",st.getId());
+        } catch (Exception e){ e.printStackTrace();}
+    }
 
     public Result userLogIn(){
         try {
@@ -31,6 +51,7 @@ public class AuthenticationController extends EPController {
             IdObject idObj = null;
             switch (lc.getRole()) {
                 case admin:
+                    idObj = findUser(lc.getEmail(), lc.getPassword(), adminCrud, UserObject.class);
                     userGroup = "admins";
                     break;
                 case medico:
