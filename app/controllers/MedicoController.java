@@ -73,16 +73,16 @@ public class MedicoController extends EPController {
         }
     }
 
-//    public Result test() {
-//        try{
-//            Thread.sleep(2000);
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        String query = EPJson.string("deleted", false);
-//        Iterable<Medico> listaMedicos = medicosCrud.collection().find(query).as(Medico.class);
-//        return ok(listaMedicos);
-//    }
+    public Result test() {
+        try{
+            Thread.sleep(2000);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        String query = EPJson.string("deleted", false);
+        Iterable<Medico> listaMedicos = medicosCrud.collection().find(query).as(Medico.class);
+        return ok(listaMedicos);
+    }
 
     /*
 

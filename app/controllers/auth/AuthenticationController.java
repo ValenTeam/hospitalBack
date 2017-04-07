@@ -7,6 +7,7 @@ import models.Paciente;
 import models.auth.LoginCredentials;
 import models.auth.SessionToken;
 import models.base.IdObject;
+import models.base.UserObject;
 import org.apache.commons.codec.binary.Hex;
 import play.mvc.Result;
 import util.EPJson;
@@ -27,6 +28,7 @@ public class AuthenticationController extends EPController {
             IdObject idObj = null;
             switch (lc.getRole()) {
                 case admin:
+                    idObj = findUser(lc.getEmail(), lc.getPassword(), adminCrud, UserObject.class);
                     userGroup = "admins";
                     break;
                 case medico:
