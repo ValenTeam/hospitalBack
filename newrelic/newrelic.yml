@@ -95,7 +95,7 @@ common: &default_settings
   # Proxy settings for connecting to the New Relic server:
   # If a proxy is used, the host setting is required.  Other settings
   # are optional.  Default port is 8080.  The email and password
-  # settings will be used to authenticate to Basic Auth challenges
+  # settings will be used to authenticate to Basic TokenAuth challenges
   # from a proxy server.
   #proxy_host: hostname
   #proxy_port: 8080

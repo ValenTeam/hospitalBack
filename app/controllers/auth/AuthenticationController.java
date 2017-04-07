@@ -6,17 +6,13 @@ import models.Medico;
 import models.Paciente;
 import models.auth.LoginCredentials;
 import models.auth.SessionToken;
-import models.auth.UserGroup;
 import models.base.IdObject;
-import models.base.UserObject;
 import org.apache.commons.codec.binary.Hex;
 import play.mvc.Result;
-import util.Auth;
 import util.EPJson;
 import util.SecurityManager;
 
 import java.security.MessageDigest;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by felipeplazas on 4/6/17.
