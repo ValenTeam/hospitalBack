@@ -96,6 +96,18 @@ PUT         /a/:id                                          controllers.MedicoEs
 GET         /test                                controllers.MedicoController.test()
 
 
+###########################################
+# UserGroup
+###########################################
+
+POST        /usergroup                          controllers.auth.UserGroupController.create()
+DELETE      /permission/:per/:idgroup           controllers.auth.UserGroupController.deletePermission(per:String,idgroup:String)
+POST        /permission/:per/:idgroup           controllers.auth.UserGroupController.addPermission(per:String,idgroup:String)
+DELETE      /usergroup/:id                      controllers.auth.UserGroupController.delete(id:String)
+GET         /permission/:id                     controllers.auth.UserGroupController.listPermissionsGroup(id:String)
+
+
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file           controllers.Assets.versioned(path="/public", file: Asset)
