@@ -47,12 +47,13 @@ public class AuthenticationController extends EPController {
             if (idObj == null)
                 return error("User does not exist or password is not correct.", 400);
             SessionToken token = tokensCrud.collection().findOne(EPJson.string("userId", idObj.getId() ) ).as(SessionToken.class);
-            if (token == null)
+            if (token == null) {
                 token = new SessionToken();
-            token.setUserId(idObj.getId());
-            token.setToken(SecurityManager.generateSessionToken());
+                token.setUserId(idObj.getId());
+                token.setToken(SecurityManager.generateSessionToken());
+                token.setUserGroup(userGroup);
+            }
             token.setExpireTimeStamp(System.currentTimeMillis() + (3600000 * 2));
-            token.setUserGroup(userGroup);
             tokensCrud.save(token);
             return ok(token);
         } catch (Exception e){
