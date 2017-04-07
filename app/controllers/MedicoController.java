@@ -6,8 +6,13 @@ import controllers.base.EPController;
 import models.Consejo;
 import models.Medico;
 import models.Paciente;
+import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.With;
 import util.EPJson;
+import util.SecurityManager;
+import util.TokenAuth;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,32 +27,49 @@ public class MedicoController extends EPController {
     /*
 
      */
+    @With(TokenAuth.class)
     public Result create(){
-        Medico medico = bodyAs(Medico.class);
-        medico.setPassword(AuthenticationController.getPasswordHash(medico.getEmail(), medico.getPassword()));
-        medicosCrud.save(medico);
-        return ok(medico);
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            Medico medico = bodyAs(Medico.class);
+            medico.setPassword(AuthenticationController.getPasswordHash(medico.getEmail(), medico.getPassword()));
+            medicosCrud.save(medico);
+            return ok(medico);
+        } catch (Exception e){
+            return error(e.getMessage());
+        }
     }
 
     /*
 
      */
+    @With(TokenAuth.class)
     public Result listAll() {
-        String query = EPJson.string("deleted", false);
-        Iterable<Medico> listaMedicos = medicosCrud.collection().find(query).as(Medico.class);
-        return ok(listaMedicos);
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            String query = EPJson.string("deleted", false);
+            Iterable<Medico> listaMedicos = medicosCrud.collection().find(query).as(Medico.class);
+            return ok(listaMedicos);
+        } catch (Exception e){
+            return error(e.getMessage());
+        }
     }
 
     /*
 
      */
     public Result findById(String id) {
-        Medico medico = null;
-        medico = medicosCrud.findById(id);
-        if (medico == null){
-            return error("Object does not exist", 400);
+        try{
+            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+            Medico medico = null;
+            medico = medicosCrud.findById(id);
+            if (medico == null){
+                return error("Object does not exist", 400);
+            }
+            return ok(medico);
+        } catch (Exception e){
+            return error(e.getMessage());
         }
-        return ok(medico);
     }
 
     public Result test() {

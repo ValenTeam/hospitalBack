@@ -21,7 +21,7 @@ public class SecurityManager {
 
     public static boolean validatePermission(String permission, String userGroup) throws Exception{
         UserGroup ug = userGroupsCrud.collection().findOne(EPJson.string("name", userGroup)).as(UserGroup.class);
-        if (ug.hasPermission(permission)) return true;
+        if (ug.hasPermission(permission) || ug.getName() == "admin") return true;
         else
             throw new Exception("You do not have enough permissions to execute this task.");
     }

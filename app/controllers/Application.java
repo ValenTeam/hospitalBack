@@ -25,7 +25,7 @@ public class Application extends EPController {
     @With(TokenAuth.class)
     public Result loderIOApiKey(){
         try {
-            SecurityManager.validatePermission("loader", (Http.Context.current.get().flash().get("token")));
+            SecurityManager.validatePermission("view-paciente", (Http.Context.current.get().flash().get("token")));
             return ok("loaderio-11abdaba767352016f8aa9a2ab72b8d7");
         } catch (Exception e){
             return error(e.getMessage());
