@@ -1,11 +1,12 @@
 package models;
 
 import models.base.IdObject;
+import models.base.UserObject;
 
 /**
  * Created by felipeplazas on 2/11/17.
  */
-public class Paciente extends IdObject {
+public class Paciente extends UserObject {
 
     private String name;
     private String address;

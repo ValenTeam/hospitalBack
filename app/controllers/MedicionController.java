@@ -6,11 +6,13 @@ import models.Consejo;
 import models.HistoriaClinica;
 import models.Medicion;
 import models.Paciente;
+import org.apache.commons.codec.binary.Hex;
 import play.libs.Json;
 import play.mvc.Result;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
 import util.EPJson;
+import util.SecurityManager;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -36,15 +38,18 @@ public class MedicionController extends EPController {
     }
 
     public Result procesarMedicion() {
-//        System.out.println("INFO "+request().body().asJson();
-//        try {
-//            Medicion m =  Json.fromJson(request().body().asJson(), Medicion.class);
-//        } catch ( Exception e){
-//            e.printStackTrace();
-//        }
         Medicion medicion = bodyAs(Medicion.class);
-//        System.out.println(medicion.getIdPaciente());
-//        System.out.println(medicion.getValorMedicion());
+        String hashInfo = medicion.getValorMedicion() +""+ medicion.getTipoMedicion();
+        String localHash = new String ();
+        try {
+            localHash = Hex.encodeHexString( SecurityManager.hashDigest(hashInfo.getBytes() ) );
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        if (localHash != null && localHash.equals( medicion.getDigest() )){
+            System.out.println("YES, it works");
+            medicion.setDigest(null);
+        }
         medsBuffer[bufferIndex++] = medicion;
         if(medicion.getColorMedicion().equals(Medicion.ColorMedicion.AMARILLO)){
             Consejo consejo = new Consejo();
@@ -72,6 +77,7 @@ public class MedicionController extends EPController {
         }
         return ok("OK");
     }
+
 
     public Result listByPaciente(String patientId){
         Iterable<Medicion> mediciones = medicosCrud.collection().find().limit(20).as(Medicion.class);

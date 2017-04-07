@@ -1,4 +1,5 @@
 
+openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
  #include <string.h>      
  // Selecciona el pin de entrada analoga a leer.
  // int pin = 24;

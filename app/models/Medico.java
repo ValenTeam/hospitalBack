@@ -1,13 +1,13 @@
 package models;
 
-import models.base.IdObject;
+import models.base.UserObject;
 
 import java.util.List;
 
 /**
  * Created by felipeplazas and je.ardila1501.
  */
-public class Medico extends IdObject {
+public class Medico extends UserObject {
 
     public enum TipoMedico{
         GENERAL, ESPECIALISTA
