@@ -25,7 +25,7 @@ public class PacienteController extends EPController {
      */
     public Result create() {
         Paciente paciente = bodyAs(Paciente.class);
-        paciente.setPassword(AuthenticationController.getPasswordHash(paciente.getEmail(), paciente.getPassword()));
+        //paciente.setPassword(AuthenticationController.getPasswordHash(paciente.getEmail(), paciente.getPassword()));
         pacientesCrud.save(paciente);
         return ok(paciente);
     }

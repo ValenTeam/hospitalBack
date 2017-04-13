@@ -93,7 +93,7 @@ PUT         /a/:id                                          controllers.MedicoEs
 # Medicos Especialistas
 #########################################
 
-GET         /test                                controllers.MedicoController.test()
+GET         /test                                             controllers.MedicoController.test()
 
 
 ###########################################

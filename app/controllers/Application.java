@@ -2,7 +2,6 @@ package controllers;
 
 import controllers.base.EPController;
 import play.mvc.*;
-import util.Auth;
 import util.SecurityManager;
 import util.TokenAuth;
 

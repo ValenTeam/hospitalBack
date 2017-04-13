@@ -64,15 +64,27 @@ public class MedicionController extends EPController {
                 consejo.setMensaje( Consejo.m3 );
 
             Paciente paciente = pacientesCrud.findById( medicion.getIdPaciente() );
-            if (paciente.getHistoriaClinica() == null){
-                paciente.setHistoriaClinica( new HistoriaClinica() );
-                paciente.getHistoriaClinica().setConsejos( new ArrayList<Consejo>() );
-            } else if (paciente.getHistoriaClinica().getConsejos() == null){
-                paciente.getHistoriaClinica().setConsejos( new ArrayList<Consejo>() );
-            }
+            if(paciente !=null) {
+                if (paciente.getHistoriaClinica() == null) {
+                    paciente.setHistoriaClinica(new HistoriaClinica());
+                    paciente.getHistoriaClinica().setConsejos(new ArrayList<Consejo>());
+                } else if (paciente.getHistoriaClinica().getConsejos() == null) {
+                    paciente.getHistoriaClinica().setConsejos(new ArrayList<Consejo>());
+                }
 
-            paciente.getHistoriaClinica().getConsejos().add( consejo );
-            pacientesCrud.save( paciente );
+                if (tipoMedida.equals(Medicion.TipoMedida.CARDIACA))
+                    paciente.setFrecuenciaActual(medicion.getValorMedicion());
+                else if(tipoMedida.equals(Medicion.TipoMedida.ESTRES))
+                    paciente.setEstresActual(medicion.getValorMedicion());
+                else if(tipoMedida.equals(Medicion.TipoMedida.PRESION))
+                    paciente.setPresionActual(medicion.getValorMedicion());
+
+
+                paciente.getHistoriaClinica().getConsejos().add(consejo);
+                pacientesCrud.save(paciente);
+            } else{
+                return error("El paciente no existe");
+            }
         }
         if ( bufferIndex == BUFFER_SIZE ) {
             insertMediciones();
