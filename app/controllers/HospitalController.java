@@ -7,7 +7,9 @@ package controllers;
 import controllers.base.EPController;
 import models.Hospital;
 import play.mvc.Result;
+import play.mvc.With;
 import util.EPJson;
+import util.TokenAuth;
 
 public class HospitalController extends EPController {
 
@@ -15,6 +17,7 @@ public class HospitalController extends EPController {
      * Creates a hospital, we assume the request is done properly (only we can create hospitals)
      * @return created hospital object
      */
+    @With(TokenAuth.class)
     public Result create() {
         Hospital hospital = bodyAs(Hospital.class);
         hospitalesCrud.save(hospital);

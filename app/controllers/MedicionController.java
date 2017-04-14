@@ -30,7 +30,7 @@ public class MedicionController extends EPController {
 
     static{
         FiniteDuration duration = Duration.create((long) 10, TimeUnit.SECONDS);
-        FiniteDuration interval = Duration.create((long) 5, TimeUnit.MINUTES);
+        FiniteDuration interval = Duration.create((long) 1, TimeUnit.MINUTES);
         play.libs.Akka.system().scheduler().schedule(
                 duration, interval,
                 () -> {
@@ -49,8 +49,10 @@ public class MedicionController extends EPController {
             e.printStackTrace();
         }
         if (localHash != null && localHash.equals( medicion.getDigest() )){
-            System.out.println("YES, it works");
             medicion.setDigest(null);
+        }
+        else{
+            return error("integrity compromised.");
         }
         medsBuffer[bufferIndex++] = medicion;
         if(medicion.getColorMedicion().equals(Medicion.ColorMedicion.AMARILLO)){
