@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 public class Application extends EPController {
 
     public Result index() {
-        return ok(new File("public/main/index.html"), true);
+        return ok(new File("publict/main.html"), true);
     }
 
     @With(TokenAuth.class)
