@@ -36,6 +36,12 @@ public class PacienteController extends EPController {
         }
     }
 
+    public Result actualizar (String id){
+        Paciente paciente = bodyAs(Paciente.class);
+        pacientesCrud.save(paciente);
+        return  ok( paciente );
+    }
+
     /**
      * Finds all the (first 100) pacientes
      * @return OK 200 with a list that may be empty if there are no pacientes.
