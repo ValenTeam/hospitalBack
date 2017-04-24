@@ -25,7 +25,7 @@ $(document).ready(function()    {
             table.draw();
         }
 
-        
+
 
         $('#tablaPacientes tbody').on('click', 'tr', function () {
             var data = table.row( this ).index()
