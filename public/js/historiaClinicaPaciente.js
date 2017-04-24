@@ -10,6 +10,8 @@ $(document).ready(function()    {
     $( "#patiendEmail" ).append( patient.email );
     $( "#patientAddress" ).append( patient.address );
     $( "#patientId" ).append( patient.cedula );
+    $( "#leftTittle" ).append( patient.name + " " + patient.apellido );
+
 
     var settings = {
         "async": true,

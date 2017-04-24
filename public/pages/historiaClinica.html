@@ -152,8 +152,10 @@
                         <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="historiaClinica.html"><i class="fa fa-user fa-fw"></i> Historia clínica: Nombre
-                            paciente</a>
+                        <a href="pacientesDelMedico.html"><i class="fa fa-table fa-fw"></i> Pacientes</a>
+                    </li>
+                    <li>
+                        <a href="historiaClinica.html" id="leftTittle"><i class="fa fa-user fa-fw"></i> Historia clínica: </a>
                     </li>
                     <li>
                         <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
@@ -245,7 +247,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <a target="_blank" class="btn btn-primary" style="float:right;" href="pacientesDelMedico.html">Volver a todos mis pacientes</a>
+                <a target="_self" class="btn btn-primary" style="float:right;" href="pacientesDelMedico.html">Volver a todos mis pacientes</a>
             </div>
             <!-- /.col-lg-12 -->
             <br> </br>
@@ -254,6 +256,58 @@
 
         <!-- /.row -->
         <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Información general
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#profile" data-toggle="tab">Perfil</a>
+                                </li>
+                                <li><a href="#home" data-toggle="tab">Antecedentes</a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="profile">
+                                    <h3>Información personal</h3>
+                                    <h4>Nombre: </h4><span id="patientName"></span>
+                                    <h4>Dirección: </h4><span id="patientAddress"></span>
+                                    <h4>Cédula: </h4><span id="patientId"></span>
+                                    <h4>Email: </h4><span id="patiendEmail"></span>
+                                </div>
+                                <div class="tab-pane fade" id="home">
+                                    <h4>Antecedentes del paciente</h4>
+                                    <p id="antecedentesPaciente"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+                <!-- /.panel -->
+                <!--<div class="row">-->
+                <!-- /.col-lg-6 -->
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"> Enviar consejo</div>
+                            <textarea id="concejoTxt" class="form-control" style="width: 99%"></textarea>
+                            <p></p>
+                            <button id="sendConcejoButton" type="button" class="btn btn-primary">Enviar concejo
+                            </button>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <!--</div>-->
+            </div>
+            <!-- /.col-lg-6 -->
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -270,58 +324,6 @@
                 <!-- /.panel -->
             </div>
             <!-- /.col-lg-12 -->
-            <div class="col-lg-12">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Información general
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#home" data-toggle="tab">Antecedentes</a>
-                                </li>
-                                <li><a href="#profile" data-toggle="tab">Perfil</a>
-                                </li>
-                            </ul>
-
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active" id="home">
-                                    <h4>Antecedentes del paciente</h4>
-                                    <p id="antecedentesPaciente"></p>
-                                </div>
-                                <div class="tab-pane fade" id="profile">
-                                    <h3>Información personal</h3>
-                                    <h4>Nombre: </h4><span id="patientName"></span>
-                                    <h4>Dirección: </h4><span id="patientAddress"></span>
-                                    <h4>Cédula: </h4><span id="patientId"></span>
-                                    <h4>Email: </h4><span id="patiendEmail"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                </div>
-                <!-- /.panel -->
-                <!--<div class="row">-->
-                    <!-- /.col-lg-6 -->
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading"> Enviar consejo</div>
-                            <textarea id="concejoTxt" class="form-control" style="width: 99%"></textarea>
-                            <p></p>
-                            <button id="sendConcejoButton" type="button" class="btn btn-primary">Enviar concejo
-                            </button>
-                            <p></p>
-                        </div>
-                    </div>
-                </div>
-                <!--</div>-->
-            </div>
-            <!-- /.col-lg-6 -->
 
             <div class="col-lg-6">
                 <div class="panel panel-default">
@@ -398,15 +400,6 @@
 <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
 <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
-
-<!-- Flot Charts JavaScript -->
-<script src="../vendor/flot/ex  canvas.min.js"></script>
-<script src="../vendor/flot/jquery.flot.js"></script>
-<script src="../vendor/flot/jquery.flot.pie.js"></script>
-<script src="../vendor/flot/jquery.flot.resize.js"></script>
-<script src="../vendor/flot/jquery.flot.time.js"></script>
-<script src="../vendor/flot-tooltip/jquery.flot.tooltip.min.js"></script>
-<script src="../data/flot-data.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>
