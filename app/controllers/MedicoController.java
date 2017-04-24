@@ -146,7 +146,6 @@ public class MedicoController extends EPController {
     }
 
     public Result createConsejo(String pacienteId, String medicoId){
-
         JsonNode node = request().body().asJson();
         JsonNode mensaje = node.get("msg");
 
