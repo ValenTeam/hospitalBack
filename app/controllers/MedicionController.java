@@ -48,12 +48,12 @@ public class MedicionController extends EPController {
         } catch (Exception e){
             e.printStackTrace();
         }
-        if (localHash != null && localHash.equals( medicion.getDigest() )){
-            medicion.setDigest(null);
-        }
-        else{
-            return error("integrity compromised.");
-        }
+//        if (localHash != null && localHash.equals( medicion.getDigest() )){
+//            medicion.setDigest(null);
+//        }
+//        else{
+//            return error("integrity compromised.");
+//        }
         medsBuffer[bufferIndex++] = medicion;
         if(medicion.getColorMedicion().equals(Medicion.ColorMedicion.AMARILLO)){
             Consejo consejo = new Consejo();
@@ -96,7 +96,9 @@ public class MedicionController extends EPController {
 
     @With(TokenAuth.class)
     public Result listByPaciente(String patientId){
-        Iterable<Medicion> mediciones = medicosCrud.collection().find().limit(20).as(Medicion.class);
+        String sort = EPJson.string("openTimestamp", 1);
+        String query = EPJson.string("idPaciente", patientId);
+        Iterable<Medicion> mediciones = medicionesCrud.collection().find(query).limit(20).sort(sort).as(Medicion.class);
         return ok( mediciones );
     }
 
