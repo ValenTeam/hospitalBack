@@ -1,6 +1,5 @@
 package models;
 
-import models.base.IdObject;
 import models.base.UserObject;
 
 /**
@@ -10,10 +9,12 @@ public class Paciente extends UserObject {
 
     private String name;
     private String apellido;
-    private int edad;
+    private long fechaNacimiento;
     private String cedula;
     private String address;
     private long marcapasosActual;
+
+    private String antecedentes;
     private long presionActual;
     private long estresActual;
     private long frecuenciaActual;
@@ -25,7 +26,13 @@ public class Paciente extends UserObject {
     public static final String AMARILLO ="AMARILLO";
     public static final String ROJO ="ROJO";
 
+    public String getAntecedentes() {
+        return antecedentes;
+    }
 
+    public void setAntecedentes(String antecedentes) {
+        this.antecedentes = antecedentes;
+    }
 
     public HistoriaClinica getHistoriaClinica() {
         return historiaClinica;
@@ -107,12 +114,12 @@ public class Paciente extends UserObject {
         this.frecuenciaActual = frecuenciaActual;
     }
 
-    public int getEdad() {
-        return edad;
+    public long getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setFechaNacimiento(long fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getEstado() {

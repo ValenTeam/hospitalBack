@@ -23,10 +23,10 @@ public class PacienteController extends EPController {
      * Creates a paciente, we assume the request is done properly
      * @return created paciente object
      */
-    @With(TokenAuth.class)
+//    @With(TokenAuth.class)
     public Result create() {
         try{
-            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
+//            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
             Paciente paciente = bodyAs(Paciente.class);
             paciente.setPassword(AuthenticationController.getPasswordHash(paciente.getEmail(), paciente.getPassword()));
             pacientesCrud.save(paciente);
