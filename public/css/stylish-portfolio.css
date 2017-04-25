@@ -35,6 +35,16 @@ body {
     border-radius: 0;
     color: #fff;
     background-color: rgba(0,0,0,0.4);
+
+}
+
+.btn-dark1 {
+    border-radius: 0;
+    color: #fff;
+    background-color: rgba(0,0,0,0.4);
+    font-size: 25px;
+    width: 40%;
+    height: 55px;
 }
 
 .btn-dark:hover,
