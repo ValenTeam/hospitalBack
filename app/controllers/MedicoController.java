@@ -140,23 +140,19 @@ public class MedicoController extends EPController {
     public Result createConsejo(String pacienteId, String medicoId){
         JsonNode node = request().body().asJson();
         JsonNode mensaje = node.get("msg");
-
         Consejo consejo=new Consejo();
-        Paciente paciente = null;
-        Medico medicoG = null;
         Date date = new Date();
         DateFormat hour = new SimpleDateFormat("HH:mm:ss");
         DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
         String horaActual= hour.format(date);
         String fechaActual = fecha.format(date);
         try{
-            paciente = pacientesCrud.findById(pacienteId);
-            medicoG = medicosCrud.findById(medicoId);
-            consejo.setMensaje("********************************************\n\n"+"Hora: "+horaActual +" - " + "Fecha: " + fechaActual + "\n"
-            + "Hola: "+paciente.getName() + "  Hoy te hago las siguiente recomendacion para mejorar tu salud: " + "\n\n"
-            + mensaje + "\n\n" + "Cordialmente tú medico: " + medicoG.getName() + "\n\n" + "********************************************");
-
-            // FALTA PERSISTIR EL CONSEJO EN LA HISTORIA CLINICA
+            Paciente paciente = pacientesCrud.findById(pacienteId);
+            Medico medicoG = medicosCrud.findById(medicoId);
+            consejo.setMensaje("Hora: "+horaActual +" - " + "Fecha: " + fechaActual + "\n"
+            + "Hola: "+paciente.getName() + ".  Hoy te hago las siguiente recomendación para mejorar tu salud: " + "\n"
+            + mensaje + "\n" + "Cordialmente tú medico: " + medicoG.getName());
+            paciente.getHistoriaClinica().getConsejos().add(consejo);
         }
         catch (Exception e){
             e.printStackTrace();

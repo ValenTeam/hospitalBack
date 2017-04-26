@@ -14,6 +14,8 @@ import util.EPJson;
 import util.SecurityManager;
 import util.TokenAuth;
 
+import java.util.ArrayList;
+
 /**
  * kjhfkjhfkhkhfdkhkdh
  */
@@ -29,6 +31,10 @@ public class PacienteController extends EPController {
 //            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
             Paciente paciente = bodyAs(Paciente.class);
             paciente.setPassword(AuthenticationController.getPasswordHash(paciente.getEmail(), paciente.getPassword()));
+            paciente.setHistoriaClinica(new HistoriaClinica());
+            paciente.getHistoriaClinica().setConsejos(new ArrayList<>());
+            paciente.getHistoriaClinica().setConsultas(new ArrayList<>());
+            paciente.getHistoriaClinica().setEmergencias(new ArrayList<>());
             pacientesCrud.save(paciente);
             return ok(paciente);
         } catch (Exception e){

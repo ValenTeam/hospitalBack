@@ -16,7 +16,7 @@ $(document).ready(function()    {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "http://localhost:9000/medicion/"+patient.id,
+        "url": host+"/medicion/"+patient.id,
         "method": "GET",
         "headers": {
             "x-auth-token": token.token,
@@ -55,19 +55,18 @@ $(document).ready(function()    {
             "async": true,
             "crossDomain": true,
             "data":JSON.stringify(body),
-            "url": "http://localhost:9000/sendConcejo/58e7dacda85b7428acd03abb/58e71a16a85b741ba5bb5a2c",
+            "url": host+"/sendConcejo/"+patient.id+"/"+token.userId,
             "method": "POST",
             "headers": {
                 "content-type": "application/json",
-                "cache-control": "no-cache",
-                "postman-token": "29b39ae6-18e2-cfc7-7339-41267f5eaa94"
+                "cache-control": "no-cache"
             }
-        }
-
+        };
         $.ajax(settings).done(function (response) {
             swal(
                 'Buen trabajo!',
-                'El concejo fue enviado exitosamente',
+                'El concejo fue enviado exitosamente: \n'+
+                response.mensaje,
                 'success'
             )
         });
