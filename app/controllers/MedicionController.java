@@ -41,13 +41,13 @@ public class MedicionController extends EPController {
 
     public Result procesarMedicion() {
         Medicion medicion = bodyAs(Medicion.class);
-        String hashInfo = medicion.getValorMedicion() +""+ medicion.getTipoMedicion();
-        String localHash = new String ();
-        try {
-            localHash = Hex.encodeHexString( SecurityManager.hashDigest(hashInfo.getBytes() ) );
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+//        String hashInfo = medicion.getValorMedicion() +""+ medicion.getTipoMedicion();
+//        String localHash = new String ();
+//        try {
+//            localHash = Hex.encodeHexString( SecurityManager.hashDigest(hashInfo.getBytes() ) );
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
 //        if (localHash != null && localHash.equals( medicion.getDigest() )){
 //            medicion.setDigest(null);
 //        }
@@ -67,21 +67,13 @@ public class MedicionController extends EPController {
 
             Paciente paciente = pacientesCrud.findById( medicion.getIdPaciente() );
             if(paciente !=null) {
-                if (paciente.getHistoriaClinica() == null) {
-                    paciente.setHistoriaClinica(new HistoriaClinica());
-                    paciente.getHistoriaClinica().setConsejos(new ArrayList<Consejo>());
-                } else if (paciente.getHistoriaClinica().getConsejos() == null) {
-                    paciente.getHistoriaClinica().setConsejos(new ArrayList<Consejo>());
-                }
-
                 if (tipoMedida.equals(Medicion.TipoMedida.CARDIACA))
                     paciente.setFrecuenciaActual(medicion.getValorMedicion());
                 else if(tipoMedida.equals(Medicion.TipoMedida.ESTRES))
                     paciente.setEstresActual(medicion.getValorMedicion());
                 else if(tipoMedida.equals(Medicion.TipoMedida.PRESION))
                     paciente.setPresionActual(medicion.getValorMedicion());
-
-
+                consejo.setFecha(System.currentTimeMillis());
                 paciente.getHistoriaClinica().getConsejos().add(consejo);
                 pacientesCrud.save(paciente);
             } else{

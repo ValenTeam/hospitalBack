@@ -141,7 +141,7 @@ public class MedicoController extends EPController {
         Consejo consejo = bodyAs(Consejo.class);
         try{
             Paciente paciente = pacientesCrud.findById(pacienteId);
-            consejo.setMensaje("Hola: "+paciente.getName() + ".  Hoy te hago las siguiente recomendación para mejorar tu salud: " + "\n"
+            consejo.setMensaje("Hola "+paciente.getName() + ". Hoy te hago las siguiente recomendación para mejorar tu salud: " + "\n"
             + consejo.getMensaje() + "\n" + "Cordialmente, Hospital Santa Fe");
             paciente.getHistoriaClinica().getConsejos().add(consejo);
             pacientesCrud.save(paciente);

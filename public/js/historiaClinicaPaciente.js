@@ -59,7 +59,7 @@ $(document).ready(function()    {
     function sendConcejo(concejoTxt) {
         var body = {
             "mensaje":concejoTxt,
-            "fecha":new Date().getMilliseconds()
+            "fecha":new Date().getTime()
         }
         var settings = {
             "async": true,
