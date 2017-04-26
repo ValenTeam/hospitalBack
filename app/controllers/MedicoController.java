@@ -125,17 +125,16 @@ public class MedicoController extends EPController {
         }
     }
 
-    /*
-
-     */
+    @With(TokenAuth.class)
     public Result findPacientes(String id) {
+        try{
+            SecurityManager.validatePermission("edit-paciente", (Http.Context.current.get().flash().get("token")));
+        } catch (Exception e){ return error(e.getMessage()); }
         Medico medico = medicosCrud.findById(id);
         if (medico == null)
             return error("Object does not exist", 400);
-        if (medico.getPacientes() == null)
-            return error("el medico con id: "+id+" No ha atendido ningun paciente");
-        else
-            return ok( medico.getPacientes() );
+        String query = EPJson.string("doctorId", id);
+        return ok( pacientesCrud.collection().find(query).as(Paciente.class) );
     }
 
     public Result createConsejo(String pacienteId, String medicoId){

@@ -7,13 +7,16 @@ import models.base.UserObject;
  */
 public class Paciente extends UserObject {
 
+    public static final String VERDE ="VERDE";
+    public static final String AMARILLO ="AMARILLO";
+    public static final String ROJO ="ROJO";
+
     private String name;
     private String apellido;
     private long fechaNacimiento;
     private String cedula;
     private String address;
     private long marcapasosActual;
-
     private String antecedentes;
     private long presionActual;
     private long estresActual;
@@ -21,10 +24,15 @@ public class Paciente extends UserObject {
     private HistoriaClinica historiaClinica;
     private Marcapasos marcapasos;
     private String estado;
+    private String doctorId;
 
-    public static final String VERDE ="VERDE";
-    public static final String AMARILLO ="AMARILLO";
-    public static final String ROJO ="ROJO";
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
 
     public String getAntecedentes() {
         return antecedentes;

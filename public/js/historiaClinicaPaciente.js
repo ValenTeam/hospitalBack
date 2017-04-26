@@ -11,7 +11,7 @@ $(document).ready(function()    {
     $( "#patientAddress" ).append( patient.address );
     $( "#patientId" ).append( patient.cedula );
     $( "#leftTittle" ).append( patient.name + " " + patient.apellido );
-
+    var token = JSON.parse(window.localStorage.getItem('user'));
 
     var settings = {
         "async": true,
@@ -19,9 +19,8 @@ $(document).ready(function()    {
         "url": "http://localhost:9000/medicion/"+patient.id,
         "method": "GET",
         "headers": {
-            "x-auth-token": "8m8d443kvru74uu7fe",
-            "cache-control": "no-cache",
-            "postman-token": "49680c9d-db45-01b0-1afa-83ec700409d3"
+            "x-auth-token": token.token,
+            "cache-control": "no-cache"
         }
     }
 
