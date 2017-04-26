@@ -89,24 +89,36 @@ $(document).ready(function()    {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Year', 'Sales', 'Expenses'],
-            ['2004',  1000,      400],
-            ['2005',  1170,      460],
-            ['2006',  660,       1120],
-            ['2007',  1030,      540]
-        ]);
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "http://localhost:9000/medicion/58e7dacda85b7428acd03abb",
+            "method": "GET",
+            "headers": {
+                "x-auth-token": token.token,
+                "cache-control": "no-cache"
+            }
+        }
 
-        var options = {
-            title: 'Company Performance',
-            curveType: 'function',
-            legend: { position: 'bottom' }
-        };
+        $.ajax(settings).done(function (response) {
+            var array = [];
+            array.push(['Date', 'Value']);
+            response.forEach(function (medicion) {
+                var date = new Date(medicion.openTimestamp);
+                array.push([date.toLocaleString(), medicion.valorMedicion]);
+            });
+            console.log(response);
+            var data = google.visualization.arrayToDataTable(array);
+            var options = {
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-        var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+            var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
 
-        chart.draw(data, options);
-        chart2.draw(data, options);
+            chart.draw(data, options);
+            chart2.draw(data, options);
+        });
     }
 });

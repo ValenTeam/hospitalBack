@@ -98,7 +98,7 @@ public class MedicionController extends EPController {
     public Result listByPaciente(String patientId){
         String sort = EPJson.string("openTimestamp", 1);
         String query = EPJson.string("idPaciente", patientId);
-        Iterable<Medicion> mediciones = medicionesCrud.collection().find(query).limit(20).sort(sort).as(Medicion.class);
+        Iterable<Medicion> mediciones = medicionesCrud.collection().find(query).sort(sort).limit(20).as(Medicion.class);
         return ok( mediciones );
     }
 
