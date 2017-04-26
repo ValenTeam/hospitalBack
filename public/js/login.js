@@ -25,7 +25,8 @@ $(document).ready(function()    {
         $.ajax(settings)
             .done(function (response) {
                 console.log(response);
-                Cookies.set('user', response);
+                window.localStorage.setItem('user', JSON.stringify(response));
+                // Cookies.set('user', response);
                 window.location.href = "/pages/index.html";
             })
             .fail(function (xhr, status, error) {

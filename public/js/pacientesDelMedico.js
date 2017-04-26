@@ -5,7 +5,7 @@ $(document).ready(function() {
     var table = $('#tablaPacientes').DataTable({
         select:         true
     });
-    $.get("http://"+source+"/medicos/pacientes/",function(data, status) {
+    $.get("http://"+source+"/pacientes",function(data, status) {
         console.log(status);
         listaPacientes = data;
         for(var i=0; i<data.length; i++) {
@@ -24,22 +24,14 @@ $(document).ready(function() {
             table.draw();
         }
 
-
-
         $('#tablaPacientes tbody').on('click', 'tr', function () {
             var data = table.row( this ).index()
             //alert( 'You clicked on '+data+'\'s row' + listaPacientes[data].name );
             var txt = JSON.stringify(listaPacientes[data]);
-            localStorage.setItem("paciente", txt);
+            window.localStorage.setItem("paciente", txt);
             window.location.href ="/pages/historiaClinica.html";s
         } );
-
-
-
-
     });
-
-
 
 });
 
