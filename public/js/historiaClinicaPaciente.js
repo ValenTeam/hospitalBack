@@ -34,7 +34,6 @@ $(document).ready(function()    {
         table2.draw();
     });
 
-
     $("#sendConcejoButton").click( function() {
         if ($("#concejoTxt").val() == undefined || $("#concejoTxt").val() == ''){
                 swal(

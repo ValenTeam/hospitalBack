@@ -1,5 +1,5 @@
+$(document).ready(function() {
 
-$(document).ready(function()    {
     var source = "localhost:9000";
     var listaPacientes;
     var table = $('#tablaPacientes').DataTable({
