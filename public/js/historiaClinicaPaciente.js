@@ -37,11 +37,11 @@ $(document).ready(function()    {
 
     $("#sendConcejoButton").click( function() {
         if ($("#concejoTxt").val() == undefined || $("#concejoTxt").val() == ''){
-            swal(
-                'Oops...',
-                'Debes escribir un concejo para poderlo enviar!',
-                'error'
-            )
+                swal(
+                    'Oops...',
+                    'Debes escribir un concejo para poderlo enviar!',
+                    'error'
+                )
         }
         else{
             sendConcejo( $("#concejoTxt").val() );
