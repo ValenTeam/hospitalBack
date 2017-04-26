@@ -139,16 +139,10 @@ public class MedicoController extends EPController {
 
     public Result createConsejo(String pacienteId, String medicoId){
         Consejo consejo = bodyAs(Consejo.class);
-        Date date = new Date();
-        DateFormat hour = new SimpleDateFormat("HH:mm:ss");
-        DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-        String horaActual= hour.format(date);
-        String fechaActual = fecha.format(date);
         try{
             Paciente paciente = pacientesCrud.findById(pacienteId);
-            consejo.setMensaje("Hora: "+horaActual +" - " + "Fecha: " + fechaActual + "\n"
-            + "Hola: "+paciente.getName() + ".  Hoy te hago las siguiente recomendación para mejorar tu salud: " + "\n"
-            + consejo.getMensaje() + "\n" + "Cordialmente, \n Hospital Santa Fe");
+            consejo.setMensaje("Hola: "+paciente.getName() + ".  Hoy te hago las siguiente recomendación para mejorar tu salud: " + "\n"
+            + consejo.getMensaje() + "\n" + "Cordialmente, Hospital Santa Fe");
             paciente.getHistoriaClinica().getConsejos().add(consejo);
             pacientesCrud.save(paciente);
         }
