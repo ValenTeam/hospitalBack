@@ -23,6 +23,17 @@ $(document).ready(function()    {
         }
     }
 
+    function updateConcejos() {
+        var table3 = $('#consejosTable').DataTable();
+        table3.clear();
+        patient.historiaClinica.consejos.forEach(function(consejo){
+            var date = new Date(consejo.fecha);
+            table3.row.add([consejo.mensaje, date.toLocaleString()]).draw();
+        });
+    }
+
+    updateConcejos();
+
     $.ajax(settings).done(function (data) {
         var table2 = $('#medicionesTable').DataTable();
         data.forEach(function(medicion){
@@ -42,13 +53,13 @@ $(document).ready(function()    {
         }
         else{
             sendConcejo( $("#concejoTxt").val() );
-            $("#concejoTxt").val("");
         }
     });
 
     function sendConcejo(concejoTxt) {
         var body = {
-            "msg":concejoTxt
+            "mensaje":concejoTxt,
+            "fecha":new Date().getMilliseconds()
         }
         var settings = {
             "async": true,
@@ -62,6 +73,9 @@ $(document).ready(function()    {
             }
         };
         $.ajax(settings).done(function (response) {
+            patient.historiaClinica.consejos.push(body);
+            $("#concejoTxt").val("");
+            updateConcejos();
             swal(
                 'Buen trabajo!',
                 'El concejo fue enviado exitosamente: \n'+

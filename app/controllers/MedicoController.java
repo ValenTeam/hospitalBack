@@ -138,9 +138,7 @@ public class MedicoController extends EPController {
     }
 
     public Result createConsejo(String pacienteId, String medicoId){
-        JsonNode node = request().body().asJson();
-        JsonNode mensaje = node.get("msg");
-        Consejo consejo=new Consejo();
+        Consejo consejo = bodyAs(Consejo.class);
         Date date = new Date();
         DateFormat hour = new SimpleDateFormat("HH:mm:ss");
         DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -148,11 +146,11 @@ public class MedicoController extends EPController {
         String fechaActual = fecha.format(date);
         try{
             Paciente paciente = pacientesCrud.findById(pacienteId);
-            Medico medicoG = medicosCrud.findById(medicoId);
             consejo.setMensaje("Hora: "+horaActual +" - " + "Fecha: " + fechaActual + "\n"
             + "Hola: "+paciente.getName() + ".  Hoy te hago las siguiente recomendación para mejorar tu salud: " + "\n"
-            + mensaje + "\n" + "Cordialmente tú medico: " + medicoG.getName());
+            + consejo.getMensaje() + "\n" + "Cordialmente, \n Hospital Santa Fe");
             paciente.getHistoriaClinica().getConsejos().add(consejo);
+            pacientesCrud.save(paciente);
         }
         catch (Exception e){
             e.printStackTrace();
