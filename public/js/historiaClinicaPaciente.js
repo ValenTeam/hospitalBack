@@ -2,7 +2,6 @@
  * Created by felipeplazas on 4/23/17.
  */
 $(document).ready(function()    {
-    var host = "http://localhost:9000";
     var patient = localStorage.getItem("paciente");
     patient = JSON.parse(patient);
     $( "#antecedentesPaciente" ).append( patient.antecedentes );
@@ -16,7 +15,7 @@ $(document).ready(function()    {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": host+"/medicion/"+patient.id,
+        "url": "/medicion/"+patient.id,
         "method": "GET",
         "headers": {
             "x-auth-token": token.token,
@@ -55,7 +54,7 @@ $(document).ready(function()    {
             "async": true,
             "crossDomain": true,
             "data":JSON.stringify(body),
-            "url": host+"/sendConcejo/"+patient.id+"/"+token.userId,
+            "url": "/sendConcejo/"+patient.id+"/"+token.userId,
             "method": "POST",
             "headers": {
                 "content-type": "application/json",

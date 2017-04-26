@@ -2,7 +2,6 @@
  * Created by felipeplazas on 4/25/17.
  */
 $(document).ready(function()    {
-    var host = "http://localhost:9000";
     $("#loginButton").click( function() {
         if (!verifyInputs()) return;
         var body = {
@@ -13,7 +12,7 @@ $(document).ready(function()    {
         var settings = {
             "async": true,
             "crossDomain": true,
-            "url": host+"/login",
+            "url": "/login",
             "method": "POST",
             "data":JSON.stringify(body),
             "headers": {

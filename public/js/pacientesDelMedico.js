@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-    var host = "http://localhost:9000";
     var listaPacientes;
     var token = JSON.parse(window.localStorage.getItem('user'));
     var table = $('#tablaPacientes').DataTable({
@@ -9,7 +8,7 @@ $(document).ready(function() {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": host+"/medicos/"+token.userId+"/pacientes",
+        "url": "/medicos/"+token.userId+"/pacientes",
         "method": "GET",
         "headers": {
             "x-auth-token": token.token,
