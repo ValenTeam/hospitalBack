@@ -5,8 +5,7 @@ $(document).ready(function() {
     var table = $('#tablaPacientes').DataTable({
         select:         true
     });
-
-    $.get("http://"+source+"/pacientes",function(data, status) {
+    $.get("http://"+source+"/medicos/pacientes/",function(data, status) {
         console.log(status);
         listaPacientes = data;
         for(var i=0; i<data.length; i++) {

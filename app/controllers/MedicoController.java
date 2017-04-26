@@ -129,20 +129,13 @@ public class MedicoController extends EPController {
 
      */
     public Result findPacientes(String id) {
-        Medico medico = null;
-        medico = medicosCrud.findById(id);
-        if (medico == null) {
+        Medico medico = medicosCrud.findById(id);
+        if (medico == null)
             return error("Object does not exist", 400);
-        }
-        if (medico.getPacientes()==null){
+        if (medico.getPacientes() == null)
             return error("el medico con id: "+id+" No ha atendido ningun paciente");
-        }
-        else{
-            List<Paciente> listaPacientes=null;
-            listaPacientes=medico.getPacientes();
-            return ok(listaPacientes);
-        }
-
+        else
+            return ok( medico.getPacientes() );
     }
 
     public Result createConsejo(String pacienteId, String medicoId){
