@@ -92,7 +92,7 @@ $(document).ready(function()    {
         var settings = {
             "async": true,
             "crossDomain": true,
-            "url": "http://localhost:9000/medicion/58e7dacda85b7428acd03abb",
+            "url": "/medicion/"+patient.id,
             "method": "GET",
             "headers": {
                 "x-auth-token": token.token,
@@ -101,14 +101,28 @@ $(document).ready(function()    {
         }
 
         $.ajax(settings).done(function (response) {
-            var array = [];
-            array.push(['Date', 'Value']);
+            var heartRate = [];
+            var pressureArray= [];
+            var stressArray = [];
+            heartRate.push(['Date', 'Frecuencia']);
+            stressArray.push(['Date', 'Estrés']);
+            pressureArray.push(['Date', 'Presión']);
             response.forEach(function (medicion) {
                 var date = new Date(medicion.openTimestamp);
-                array.push([date.toLocaleString(), medicion.valorMedicion]);
+                if (medicion.tipoMedicion == 'ESTRES')
+                    stressArray.push([date.toLocaleString(), medicion.valorMedicion]);
+                else if (medicion.tipoMedicion == 'PRESION')
+                    pressureArray.push([date.toLocaleString(), medicion.valorMedicion]);
+                else
+                    heartRate.push([date.toLocaleString(), medicion.valorMedicion]);
             });
+            var data = google.visualization.arrayToDataTable(heartRate);
+            var data2 = google.visualization.arrayToDataTable(pressureArray);
+            var data3 = google.visualization.arrayToDataTable(stressArray);
             console.log(response);
-            var data = google.visualization.arrayToDataTable(array);
+            console.log(heartRate);
+            // console.log(pressureArray);
+            // console.log(stressArray);
             var options = {
                 curveType: 'function',
                 legend: { position: 'bottom' }
@@ -116,9 +130,11 @@ $(document).ready(function()    {
 
             var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
             var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+            var chart3 = new google.visualization.LineChart(document.getElementById('curve_chart3'));
 
             chart.draw(data, options);
-            chart2.draw(data, options);
+            chart2.draw(data2, options);
+            chart3.draw(data3, options);
         });
     }
 });

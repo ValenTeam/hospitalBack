@@ -25,8 +25,10 @@ $(document).ready(function()    {
             .done(function (response) {
                 console.log(response);
                 window.localStorage.setItem('user', JSON.stringify(response));
-                // Cookies.set('user', response);
-                window.location.href = "/pages/index.html";
+                if ($('input[name=optradio]:checked', '#loginForm').val() == 'medico')
+                    window.location.href = "/pages/pacientesDelMedico.html";
+                else
+                    window.location.href = "/pages/index.html";
             })
             .fail(function (xhr, status, error) {
                 swal(
