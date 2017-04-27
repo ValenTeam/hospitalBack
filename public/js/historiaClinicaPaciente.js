@@ -134,4 +134,5 @@ $(document).ready(function () {
             chart3.draw(data3, options);
         });
     }
+
 });

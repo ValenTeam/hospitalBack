@@ -2,6 +2,16 @@
  * Created by felipeplazas on 4/25/17.
  */
 $(document).ready(function()    {
+    var token = JSON.parse(window.localStorage.getItem('user'));
+    if (token == null || token.expireTimeStamp < new Date().getTime()){
+        $("#pageBody").show();
+    }
+    else{
+        if (token.userGroup == 'medicos')
+            window.location.href = "/pages/pacientesDelMedico.html";
+        else if (token.userGroup == 'pacientes')
+            window.location.href = "/pages/perfilPaciente.html";
+    }
     $("#loginButton").click( function() {
         if (!verifyInputs()) return;
         var body = {
