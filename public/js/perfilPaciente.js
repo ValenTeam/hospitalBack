@@ -2,14 +2,13 @@
  * Created by felipeplazas on 4/23/17.
  */
 $(document).ready(function () {
-    var patient = localStorage.getItem("paciente");
+    var patient = localStorage.getItem("patient");
     patient = JSON.parse(patient);
     $("#antecedentesPaciente").append(patient.antecedentes);
     $("#patientName").append(patient.name + " " + patient.apellido);
     $("#patiendEmail").append(patient.email);
     $("#patientAddress").append(patient.address);
     $("#patientId").append(patient.cedula);
-    $("#leftTittle").append(patient.name + " " + patient.apellido);
     var token = JSON.parse(window.localStorage.getItem('user'));
 
     var settings = {
@@ -42,48 +41,6 @@ $(document).ready(function () {
         });
         table2.draw();
     });
-
-    $("#sendConcejoButton").click(function () {
-        if ($("#concejoTxt").val() == undefined || $("#concejoTxt").val() == '') {
-            swal(
-                'Oops...',
-                'Debes escribir un concejo para poderlo enviar!',
-                'error'
-            )
-        }
-        else {
-            sendConcejo($("#concejoTxt").val());
-        }
-    });
-
-    function sendConcejo(concejoTxt) {
-        var body = {
-            "mensaje": concejoTxt,
-            "fecha": new Date().getTime()
-        }
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "data": JSON.stringify(body),
-            "url": "/sendConcejo/" + patient.id + "/" + token.userId,
-            "method": "POST",
-            "headers": {
-                "content-type": "application/json",
-                "cache-control": "no-cache"
-            }
-        };
-        $.ajax(settings).done(function (response) {
-            patient.historiaClinica.consejos.push(body);
-            $("#concejoTxt").val("");
-            updateConcejos();
-            swal(
-                'Buen trabajo!',
-                'El concejo fue enviado exitosamente: \n' +
-                response.mensaje,
-                'success'
-            )
-        });
-    }
 
     google.charts.load('current', {'packages': ['corechart']});
     google.charts.setOnLoadCallback(drawChart);

@@ -23,12 +23,25 @@ $(document).ready(function()    {
 
         $.ajax(settings)
             .done(function (response) {
-                console.log(response);
                 window.localStorage.setItem('user', JSON.stringify(response));
                 if ($('input[name=optradio]:checked', '#loginForm').val() == 'medico')
                     window.location.href = "/pages/pacientesDelMedico.html";
-                else
-                    window.location.href = "/pages/index.html";
+                else {
+                    var settings = {
+                        "async": true,
+                        "crossDomain": true,
+                        "url": "http://localhost:9000/pacientes/"+response.userId,
+                        "method": "GET",
+                        "headers": {
+                            "x-auth-token": response.token,
+                            "cache-control": "no-cache"
+                        }
+                    };
+                    $.ajax(settings).done(function (response) {
+                        window.localStorage.setItem('patient', JSON.stringify(response));
+                        window.location.href = "/pages/perfilPaciente.html";
+                    });
+                }
             })
             .fail(function (xhr, status, error) {
                 swal(
