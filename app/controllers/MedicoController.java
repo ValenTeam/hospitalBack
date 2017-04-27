@@ -137,7 +137,11 @@ public class MedicoController extends EPController {
         return ok( pacientesCrud.collection().find(query).as(Paciente.class) );
     }
 
+    @With(TokenAuth.class)
     public Result createConsejo(String pacienteId, String medicoId){
+        try{
+            SecurityManager.validatePermission("send-consejo", (Http.Context.current.get().flash().get("token")));
+        } catch (Exception e){ return error(e.getMessage()); }
         Consejo consejo = bodyAs(Consejo.class);
         try{
             Paciente paciente = pacientesCrud.findById(pacienteId);
