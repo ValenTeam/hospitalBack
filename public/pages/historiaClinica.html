@@ -14,6 +14,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <!--Custom CSS-->
+    <link href="../css/historiaClinicaPaciente.css" rel="stylesheet">
+
     <!-- MetisMenu CSS -->
     <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
@@ -256,11 +259,11 @@
 
 
         <!-- /.row -->
-        <div class="row">
+        <!--<div class="row">-->
             <div class="col-lg-12">
                 <div class="col-lg-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-heading" id="testID">
                             Información general
                         </div>
                         <!-- /.panel-heading -->
@@ -309,14 +312,14 @@
                 <!--</div>-->
             </div>
             <!-- /.col-lg-6 -->
-            <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-xs-12" style="padding-right: 0px!important;">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Frecuencia cardiaca
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body" style="padding: 0 0 0 0; z-index: 20">
-                        <div id="curve_chart" style="width: 460px; height: 500px; z-index: -900 !important;"></div>
+                        <div id="curve_chart" class="measureChart" style="width: 460px; height: 500px; z-index: -900 !important;"></div>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -324,34 +327,34 @@
             </div>
             <!-- /.col-lg-12 -->
 
-            <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-xs-12" style="padding-right: 0px!important;">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Presión sanguinea
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body" style="padding: 0 0 0 0; z-index: 20">
-                        <div id="curve_chart2" style="width: 460px; height: 500px; z-index: -900 !important;"></div>
+                        <div id="curve_chart2" class="measureChart" style="width: 460px; height: 500px; z-index: -900 !important;"></div>
                     </div>
                 </div>
                 <!-- /.panel -->
             </div>
 
-            <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-xs-12" style="padding-right: 0px!important;">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Nivel de estrés
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body" style="padding: 0 0 0 0; z-index: 20">
-                        <div id="curve_chart3" style="width: 460px; height: 500px; z-index: -900 !important;"></div>
+                        <div id="curve_chart3" class="measureChart" style="width: 460px; height: 500px; z-index: -900 !important;"></div>
                     </div>
                 </div>
                 <!-- /.panel -->
             </div>
 
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-xs-12" style="padding-right: 0px!important;">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Historial de mediciones
@@ -377,7 +380,7 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
-                <div class="col-lg-6 col-md-6 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-xs-12" style="padding-right: 0px!important;">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Historial de consejos
@@ -405,7 +408,7 @@
             <!-- /.col-lg-6 -->
             
             <!-- /.col-lg-6 -->
-        </div>
+        <!--</div>-->
         <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->

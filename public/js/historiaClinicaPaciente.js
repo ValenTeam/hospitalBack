@@ -85,6 +85,18 @@ $(document).ready(function()    {
         });
     }
 
+    $(window).resize(function() {
+        if(this.resizeTO) clearTimeout(this.resizeTO);
+        this.resizeTO = setTimeout(function() {
+            $(this).trigger('resizeEnd');
+        }, 500);
+    });
+
+//redraw graph when window resize is completed
+    $(window).on('resizeEnd', function() {
+        drawChart();
+    });
+
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
 
@@ -119,10 +131,6 @@ $(document).ready(function()    {
             var data = google.visualization.arrayToDataTable(heartRate);
             var data2 = google.visualization.arrayToDataTable(pressureArray);
             var data3 = google.visualization.arrayToDataTable(stressArray);
-            console.log(response);
-            console.log(heartRate);
-            // console.log(pressureArray);
-            // console.log(stressArray);
             var options = {
                 curveType: 'function',
                 legend: { position: 'bottom' }
