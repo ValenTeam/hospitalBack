@@ -41,20 +41,21 @@ public class MedicionController extends EPController {
 
     public Result procesarMedicion() {
         Medicion medicion = bodyAs(Medicion.class);
-//        String hashInfo = medicion.getValorMedicion() +""+ medicion.getTipoMedicion();
-//        String localHash = new String ();
-//        try {
-//            localHash = Hex.encodeHexString( SecurityManager.hashDigest(hashInfo.getBytes() ) );
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        if (localHash != null && localHash.equals( medicion.getDigest() )){
-//            medicion.setDigest(null);
-//        }
-//        else{
-//            return error("integrity compromised.");
-//        }
         medsBuffer[bufferIndex++] = medicion;
+        if(medicion.getColorMedicion().equals(Medicion.ColorMedicion.AMARILLO)){
+            try{
+                yellowConsejo(medicion);
+            } catch (Exception e){
+                return error(e.getMessage());
+            }
+        }
+        if ( bufferIndex == BUFFER_SIZE ) {
+            insertMediciones();
+        }
+        return ok("OK");
+    }
+
+    private static void yellowConsejo(Medicion medicion) throws Exception{
         if(medicion.getColorMedicion().equals(Medicion.ColorMedicion.AMARILLO)){
             Consejo consejo = new Consejo();
             Medicion.TipoMedida tipoMedida = medicion.getTipoMedicion();
@@ -66,7 +67,7 @@ public class MedicionController extends EPController {
                 consejo.setMensaje( Consejo.m3 );
 
             Paciente paciente = pacientesCrud.findById( medicion.getIdPaciente() );
-            if(paciente !=null) {
+            if(paciente != null) {
                 if (tipoMedida.equals(Medicion.TipoMedida.CARDIACA))
                     paciente.setFrecuenciaActual(medicion.getValorMedicion());
                 else if(tipoMedida.equals(Medicion.TipoMedida.ESTRES))
@@ -77,13 +78,9 @@ public class MedicionController extends EPController {
                 paciente.getHistoriaClinica().getConsejos().add(consejo);
                 pacientesCrud.save(paciente);
             } else{
-                return error("El paciente no existe");
+                throw new Exception("El paciente no existe");
             }
         }
-        if ( bufferIndex == BUFFER_SIZE ) {
-            insertMediciones();
-        }
-        return ok("OK");
     }
 
     @With(TokenAuth.class)
@@ -102,7 +99,7 @@ public class MedicionController extends EPController {
         return ok( mediciones );
     }
 
-    private synchronized static void insertMediciones(){
+    public synchronized static void insertMediciones(){
         if (bufferIndex != BUFFER_SIZE && bufferIndex != 0)
             medicionesCrud.collection().insert( Arrays.copyOf(medsBuffer, bufferIndex) );
         else if (bufferIndex == BUFFER_SIZE)

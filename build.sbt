@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   "uk.co.panaxiom" %% "play-jongo" % "1.0.1-jongo1.2",
   "org.mongodb" % "mongo-java-driver" % "3.4.2",
   "commons-codec" % "commons-codec" % "1.10",
+  "com.pusher" % "pusher-http-java" % "1.0.0",
 //  "junit" % "junit" % "4.12",
   javaWs
 )

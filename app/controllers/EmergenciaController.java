@@ -26,7 +26,7 @@ public class EmergenciaController extends EPController {
 
     static{
         FiniteDuration duration = Duration.create((long) 5, TimeUnit.SECONDS);
-        FiniteDuration interval = Duration.create((long) 1, TimeUnit.SECONDS);
+        FiniteDuration interval = Duration.create((long) 200, TimeUnit.MILLISECONDS);
         play.libs.Akka.system().scheduler().schedule(
                 duration, interval,
                 () -> {
@@ -52,6 +52,12 @@ public class EmergenciaController extends EPController {
                     insertEmergencias();
                 });
             }
+        }
+        try{
+            MedicionController.insertMediciones();
+            PusherController.sendAlert(emergencia);
+        } catch (Exception e){
+            return error(e.getMessage());
         }
         return ok( "processed" );
     }
