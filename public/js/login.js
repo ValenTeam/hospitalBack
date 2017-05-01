@@ -40,7 +40,7 @@ $(document).ready(function()    {
                     var settings = {
                         "async": true,
                         "crossDomain": true,
-                        "url": "http://localhost:9000/pacientes/"+response.userId,
+                        "url": "/pacientes/"+response.userId,
                         "method": "GET",
                         "headers": {
                             "x-auth-token": response.token,
