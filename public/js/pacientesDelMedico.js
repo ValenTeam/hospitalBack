@@ -40,7 +40,7 @@ $(document).ready(function() {
     } );
 
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    Pusher.logToConsole = false;
 
     var pusher = new Pusher('9000a2bfc63c687333a0', {
         encrypted: true
@@ -51,7 +51,7 @@ $(document).ready(function() {
         console.log(data);
         swal({
             title: 'ALERTA',
-            text: "Un paciente ha generado una alerta roja",
+            text: "Tu paciente "+ data.name +" "+data.apellido+" ha generado una alerta roja",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#2ECC71',
@@ -59,15 +59,12 @@ $(document).ready(function() {
             confirmButtonText: 'Ver perfil paciente',
             cancelButtonText: 'Ignorar'
         }).then(function () {
-            for(var i=0; i < listaPacientes.length; i++){
-                if (listaPacientes[i].id == data.patient){
-                    var txt = JSON.stringify(listaPacientes[i]);
-                    window.localStorage.setItem("paciente", txt);
-                    window.location.href ="/pages/historiaClinica.html";
-                }
-            }
+            var txt = JSON.stringify(data);
+            window.localStorage.setItem("paciente", txt);
+            window.location.href ="/pages/historiaClinica.html";
         })
     });
+
 
 });
 

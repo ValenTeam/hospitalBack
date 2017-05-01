@@ -29,8 +29,7 @@ public class PusherController extends EPController {
         CompletableFuture.runAsync(() -> {
             try {
                 Paciente paciente = pacientesCrud.findById(emergencia.getPatientId());
-                Map<String, Object> data = EPJson.map("patient", emergencia.getPatientId(), "tipo", emergencia.getTipoMedida());
-                pusher.trigger(paciente.getDoctorId(), "my-event", data);
+                pusher.trigger(paciente.getDoctorId(), "my-event", paciente);
             } catch (Exception e) {
                 e.printStackTrace();
             }
