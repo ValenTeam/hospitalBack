@@ -6,8 +6,7 @@ package models;
 public class MedicoGeneral extends Medico {
 
     private String colorOjos;
-
-
+    
     public String getColorOjos() {
         return colorOjos;
     }

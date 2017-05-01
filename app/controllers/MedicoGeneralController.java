@@ -2,6 +2,7 @@ package controllers;
 
 
 import controllers.base.EPController;
+import models.IFachada;
 import models.MedicoGeneral;
 import models.Paciente;
 import play.mvc.Result;
@@ -45,7 +46,8 @@ public class MedicoGeneralController extends EPController {
 
     public String createConsejo(String pacienteId, String mensaje, String medicoId){
         String consejo=null;
-        Paciente paciente = null;
+        //Paciente paciente = null;
+        IFachada paciente = null;
         MedicoGeneral medicoG = null;
         Date date = new Date();
         DateFormat hour = new SimpleDateFormat("HH:mm:ss");

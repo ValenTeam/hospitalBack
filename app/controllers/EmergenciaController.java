@@ -3,6 +3,7 @@ package controllers;
 import controllers.base.EPController;
 import models.Emergencia;
 import models.HistoriaClinica;
+import models.IFachada;
 import models.Paciente;
 import play.mvc.Result;
 import scala.concurrent.duration.Duration;
@@ -78,7 +79,8 @@ public class EmergenciaController extends EPController {
         while (emergencias.hasNext()){
             Emergencia emergencia = emergencias.next();
             emergencia.setProcessed(true);
-            Paciente paciente = pacientesCrud.findById( emergencia.getPatientId() );
+            //Paciente paciente = pacientesCrud.findById( emergencia.getPatientId() );
+            IFachada paciente = pacientesCrud.findById( emergencia.getPatientId() );
             if (paciente.getHistoriaClinica() == null){
                 paciente.setHistoriaClinica( new HistoriaClinica() );
                 paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
@@ -87,7 +89,7 @@ public class EmergenciaController extends EPController {
                 paciente.getHistoriaClinica().setEmergencias( new ArrayList<Emergencia>() );
             }
             paciente.getHistoriaClinica().getEmergencias().add( emergencia );
-            pacientesCrud.save( paciente );
+            pacientesCrud.save( (Paciente) paciente );
             emergenciasCrud.save(emergencia);
         }
     }

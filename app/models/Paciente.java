@@ -2,10 +2,12 @@ package models;
 
 import models.base.UserObject;
 
+import java.util.List;
+
 /**
  * Created by felipeplazas on 2/11/17.
  */
-public class Paciente extends UserObject {
+public class Paciente extends UserObject implements IFachada {
 
     public static final String VERDE ="VERDE";
     public static final String AMARILLO ="AMARILLO";
@@ -137,4 +139,20 @@ public class Paciente extends UserObject {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    @Override
+    public List<Emergencia> getEmergencias(){
+        return this.historiaClinica.getEmergencias();
+    }
+
+    @Override
+    public List<Consejo> getConsejos(){
+        return this.historiaClinica.getConsejos();
+    }
+
+    @Override
+    public List<Consulta> getConsultas(){
+        return this.historiaClinica.getConsultas();
+    }
+
 }

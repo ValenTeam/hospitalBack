@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import controllers.auth.AuthenticationController;
 import controllers.base.EPController;
 import models.Consejo;
+import models.IFachada;
 import models.Medico;
 import models.Paciente;
 import play.mvc.Http;
@@ -144,11 +145,12 @@ public class MedicoController extends EPController {
         } catch (Exception e){ return error(e.getMessage()); }
         Consejo consejo = bodyAs(Consejo.class);
         try{
-            Paciente paciente = pacientesCrud.findById(pacienteId);
+            //Paciente paciente = pacientesCrud.findById(pacienteId);
+            IFachada paciente = pacientesCrud.findById(pacienteId);
             consejo.setMensaje("Hola "+paciente.getName() + ". Hoy te hago las siguiente recomendación para mejorar tu salud: " + "\n"
             + consejo.getMensaje() + "\n" + "Cordialmente, Hospital Santa Fe");
             paciente.getHistoriaClinica().getConsejos().add(consejo);
-            pacientesCrud.save(paciente);
+            pacientesCrud.save((Paciente) paciente);
         }
         catch (Exception e){
             e.printStackTrace();

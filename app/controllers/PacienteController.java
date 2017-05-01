@@ -3,10 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import controllers.auth.AuthenticationController;
 import controllers.base.EPController;
-import models.HistoriaClinica;
-import models.Marcapasos;
-import models.Medico;
-import models.Paciente;
+import models.*;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.With;
@@ -87,7 +84,8 @@ public class PacienteController extends EPController {
      * @return OK 200 if Paciente exists, 400 ERROR if it doesn't
      */
     public Result findHistoriaById(String id) {
-        Paciente paciente = pacientesCrud.findById(id);
+        //Paciente paciente = pacientesCrud.findById(id);
+        IFachada paciente = pacientesCrud.findById(id);
         if (paciente == null)
             return error("Object does not exist", 400);
         return ok( paciente.getHistoriaClinica() );

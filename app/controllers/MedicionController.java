@@ -2,10 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import controllers.base.EPController;
-import models.Consejo;
-import models.HistoriaClinica;
-import models.Medicion;
-import models.Paciente;
+import models.*;
 import org.apache.commons.codec.binary.Hex;
 import play.libs.Json;
 import play.mvc.Result;
@@ -65,7 +62,8 @@ public class MedicionController extends EPController {
             else if(tipoMedida.equals(Medicion.TipoMedida.PRESION))
                 consejo.setMensaje( Consejo.m3 );
 
-            Paciente paciente = pacientesCrud.findById( medicion.getIdPaciente() );
+            //Paciente paciente = pacientesCrud.findById( medicion.getIdPaciente() );
+            IFachada paciente = pacientesCrud.findById( medicion.getIdPaciente() );
             if(paciente !=null) {
                 if (tipoMedida.equals(Medicion.TipoMedida.CARDIACA))
                     paciente.setFrecuenciaActual(medicion.getValorMedicion());
@@ -75,7 +73,7 @@ public class MedicionController extends EPController {
                     paciente.setPresionActual(medicion.getValorMedicion());
                 consejo.setFecha(System.currentTimeMillis());
                 paciente.getHistoriaClinica().getConsejos().add(consejo);
-                pacientesCrud.save(paciente);
+                pacientesCrud.save((Paciente) paciente);
             } else{
                 return error("El paciente no existe");
             }
