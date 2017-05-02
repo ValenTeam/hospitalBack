@@ -62,7 +62,7 @@ public class MedicionController extends EPController {
                 consejo.setMensaje( Consejo.m2 );
             else if(tipoMedida.equals(Medicion.TipoMedida.PRESION))
                 consejo.setMensaje( Consejo.m3 );
-            
+
             //Paciente paciente = pacientesCrud.findById( medicion.getIdPaciente() );
             IFachada paciente = pacientesCrud.findById( medicion.getIdPaciente() );
             if(paciente !=null) {
