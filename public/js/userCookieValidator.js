@@ -17,6 +17,6 @@ $(document).ready(function()    {
     function logOut() {
         localStorage.removeItem('user');
         localStorage.removeItem('patient');
-        window.location.href = "/";
+        window.location.href = "/pages/login.html";
     }
 });
