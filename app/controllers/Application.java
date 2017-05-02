@@ -21,10 +21,10 @@ public class Application extends EPController {
         return ok(new File("public/main.html"), true);
     }
 
-    @With(TokenAuth.class)
+    // @With(TokenAuth.class)
     public Result loderIOApiKey(){
         try {
-            SecurityManager.validatePermission("view-paciente", (Http.Context.current.get().flash().get("token")));
+            // SecurityManager.validatePermission("view-paciente", (Http.Context.current.get().flash().get("token")));
             return ok("loaderio-11abdaba767352016f8aa9a2ab72b8d7");
         } catch (Exception e){
             return error(e.getMessage());

@@ -36,7 +36,7 @@ $(document).ready(function() {
         var data = table.row( this ).index()
         var txt = JSON.stringify(listaPacientes[data]);
         window.localStorage.setItem("paciente", txt);
-        window.location.href ="/pages/historiaClinica.html";s
+        window.location.href ="/pages/historiaClinica.html";
     } );
 
     // Enable pusher logging - don't include this in production
