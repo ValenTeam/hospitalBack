@@ -13,7 +13,11 @@ $(document).ready(function()    {
             window.location.href = "/pages/perfilPaciente.html";
     }
     $("#loginButton").click( function() {
-        if (!verifyInputs()) return;
+        $("#loadingSpinner").show();
+        if (!verifyInputs()) {
+            $("#loadingSpinner").hide();
+            return;
+        }
         var body = {
             "email":$("#emailField").val(),
             "role":$('input[name=optradio]:checked', '#loginForm').val(),
@@ -54,6 +58,7 @@ $(document).ready(function()    {
                 }
             })
             .fail(function (xhr, status, error) {
+                $("#loadingSpinner").hide();
                 swal(
                     'Oops...',
                     'ERROR: '+xhr.responseJSON.message,
