@@ -11,6 +11,7 @@ $(document).ready(function () {
     $("#patientId").append(patient.cedula);
     $("#leftTittle").append(patient.name + " " + patient.apellido);
     var token = JSON.parse(window.localStorage.getItem('user'));
+    $("#loadingSpinner").show();
 
     var settings = {
         "async": true,
@@ -138,6 +139,9 @@ $(document).ready(function () {
             var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
             var chart3 = new google.visualization.LineChart(document.getElementById('curve_chart3'));
 
+            $("#loadingSpinner").hide();
+            $("#loadingSpinner2").hide();
+            $("#loadingSpinner3 ").hide();
             chart.draw(data, options);
             chart2.draw(data2, options);
             chart3.draw(data3, options);
