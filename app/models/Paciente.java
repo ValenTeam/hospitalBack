@@ -24,7 +24,7 @@ public class Paciente extends UserObject implements IFachada {
     private long estresActual;
     private long frecuenciaActual;
     private HistoriaClinica historiaClinica;
-    private Marcapasos marcapasos;
+    private String marcapasos;
     private String estado;
     private String doctorId;
 
@@ -68,11 +68,11 @@ public class Paciente extends UserObject implements IFachada {
         this.address = address;
     }
 
-    public Marcapasos getMarcapasos() {
+    public String getMarcapasos() {
         return marcapasos;
     }
 
-    public void setMarcapasos(Marcapasos marcapasos) {
+    public void setMarcapasos(String marcapasos) {
         this.marcapasos = marcapasos;
     }
 

@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class MedicoEspecialista extends Medico {
 
-    private List <String> especialidad;
+    private String especialidad;
 
-    public List<String> getEspecialidad() {return especialidad;}
-
-    public void setEspecialidad(List<String> especialidad) {this.especialidad = especialidad;}
+    public String getEspecialidad() {
+        return especialidad;
+    }
 }

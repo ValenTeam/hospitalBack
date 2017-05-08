@@ -56,9 +56,9 @@ public interface IFachada {
 
     public void setFrecuenciaActual(long frecuenciaActual);
 
-    public Marcapasos getMarcapasos();
+    public String getMarcapasos();
 
-    public void setMarcapasos(Marcapasos marcapasos);
+    public void setMarcapasos(String marcapasos);
     //********************************************************************
 
     /**

@@ -11,7 +11,6 @@ $(document).ready(function () {
     $("#patientId").append(patient.cedula);
     $("#leftTittle").append(patient.name + " " + patient.apellido);
     var token = JSON.parse(window.localStorage.getItem('user'));
-    $("#loadingSpinner").show();
 
     var settings = {
         "async": true,
@@ -172,5 +171,67 @@ $(document).ready(function () {
             window.location.href ="/pages/historiaClinica.html";
         })
     });
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/medicos/id/"+token.userId,
+        "method": "GET",
+        "headers": {
+            "x-auth-token": token.token,
+            "cache-control": "no-cache"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        if (response.especialidad != null){
+            $("#marcapasosEx").show();
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "/marcapasos/"+patient.marcapasos,
+                "method": "GET",
+                "headers": {
+                    "x-auth-token": token.token
+                }
+            }
+
+            $.ajax(settings).done(function (response) {
+                $("#amplitud").val(response.amplitud);
+                $("#duracion").val(response.duracion);
+                $("#sens").val(response.sensibilidad);
+            });
+        }
+    });
+
+
+    $('#marcapasosForm').submit(function() {
+        $("#loadingSpinner4").show();
+        var data = {};
+        data.amplitud = $("#amplitud").val();
+        data.duracion = $("#duracion").val();
+        data.sensibilidad = $("#sens").val();
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "data":JSON.stringify(data),
+            "url": "/marcapasos/"+patient.marcapasos,
+            "method": "PUT",
+            "headers": {
+                "content-type": "application/json",
+                "x-auth-token": token.token,
+                "cache-control": "no-cache"
+            }
+        }
+        $.ajax(settings).done(function (response) {
+            swal(
+                'Buen trabajo!',
+                'El marcapasos fue actualizado exitosamente',
+                'success'
+            )
+            $("#loadingSpinner4").hide();
+        });
+    });
+
 
 });

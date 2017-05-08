@@ -9,15 +9,27 @@ import java.util.List;
  */
 public class Medico extends UserObject {
 
-    public enum TipoMedico{
-        GENERAL, ESPECIALISTA
-    }
-    private String name;
-    private Integer registroMedico;
-    private String empresaAfiliado;
-    private List<Paciente> pacientes;
-    private TipoMedico tipoMedico;
 
+    private String name;
+    private int phoneNumber;
+    private String especialidad;
+
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getName() {
         return name;
@@ -27,20 +39,5 @@ public class Medico extends UserObject {
         this.name = name;
     }
 
-    public Integer getRegistroMedico() { return registroMedico; }
-
-    public void setRegistroMedico(Integer registroMedico) {this.registroMedico = registroMedico; }
-
-    public String getEmpresaAfiliado() {return empresaAfiliado;}
-
-    public void setEmpresaAfiliado(String empresaAfiliado) {this.empresaAfiliado = empresaAfiliado;}
-
-    public List<Paciente> getPacientes() {return pacientes;}
-
-    public void setPacientes(List<Paciente> pacientes) {this.pacientes = pacientes;}
-
-    public TipoMedico getTipoMedico() {return tipoMedico;}
-
-    public void setTipoMedico(TipoMedico tipoMedico) {this.tipoMedico = tipoMedico;}
 }
 

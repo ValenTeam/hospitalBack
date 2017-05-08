@@ -2,7 +2,11 @@ package controllers;
 
 import controllers.base.EPController;
 import models.*;
+import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.With;
+import util.SecurityManager;
+import util.TokenAuth;
 
 import java.util.ArrayList;
 
@@ -25,10 +29,13 @@ public class MarcapasosController extends EPController {
      * Updates a marcapasos, we assume the request is done properly
      * @return updated marcapasos object
      */
+    @With(TokenAuth.class)
     public Result update(String id) {
+        try{
+            SecurityManager.validatePermission("edit-marcapasos", (Http.Context.current.get().flash().get("token")));
+        } catch (Exception e){ return error(e.getMessage()); }
         Marcapasos marcapasos = bodyAs(Marcapasos.class);
-        marcapasosCrud.update(id, marcapasos);
-        return ok(marcapasos);
+        return ok( marcapasosCrud.update(id, marcapasos) );
     }
 
 
@@ -47,7 +54,11 @@ public class MarcapasosController extends EPController {
      * @param id
      * @return OK 200 if Marcapasos exists, 400 ERROR if it doesn't
      */
+    @With(TokenAuth.class)
     public Result findById(String id) {
+        try{
+            SecurityManager.validatePermission("view-marcapasos", (Http.Context.current.get().flash().get("token")));
+        } catch (Exception e){ return error(e.getMessage()); }
         Marcapasos marcapasos = null;
         try {
             marcapasos = marcapasosCrud.findById(id);

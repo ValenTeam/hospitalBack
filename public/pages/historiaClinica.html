@@ -54,7 +54,8 @@
             </button>
             <div>
                 <!--<img src="http://i.imgur.com/CuimN21.png" style="width:78px;height:60px;padding-left: 10px;">-->
-                <a class="navbar-brand" href="pacientesDelMedico.html" style="float:right;">Hospital Cardiológico Santa fé</a>
+                <a class="navbar-brand" href="pacientesDelMedico.html" style="float:right;">Hospital Cardiológico Santa
+                    fé</a>
             </div>
 
         </div>
@@ -100,7 +101,8 @@
                         <a href="pacientesDelMedico.html"><i class="fa fa-group fa-fw"></i> Pacientes</a>
                     </li>
                     <li>
-                        <a href="historiaClinica.html" id="leftTittle"><span>—</span><i class="fa fa-user fa-fw"></i>Historia clínica: </a>
+                        <a href="historiaClinica.html" id="leftTittle"><span>—</span><i class="fa fa-user fa-fw"></i>Historia
+                            clínica: </a>
                     </li>
                     <!--<li>-->
                     <!--<a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>-->
@@ -192,7 +194,8 @@
 
         <!--<div class="row">-->
         <div class="col-lg-12">
-            <a target="_self" class="btn btn-primary" style="float:right; margin-right: 15px" href="pacientesDelMedico.html">Volver a todos mis pacientes</a>
+            <a target="_self" class="btn btn-primary" style="float:right; margin-right: 15px"
+               href="pacientesDelMedico.html">Volver a todos mis pacientes</a>
         </div>
         <!-- /.col-lg-12 -->
         <br> </br>
@@ -214,6 +217,8 @@
                             <li class="active"><a href="#profile" data-toggle="tab">Perfil</a>
                             </li>
                             <li><a href="#home" data-toggle="tab">Antecedentes</a>
+                            </li>
+                            <li id="marcapasosEx" style="display: none;"><a  href="#marcapasos" data-toggle="tab">Marcapasos</a>
                             </li>
                         </ul>
 
@@ -260,6 +265,27 @@
                                 <h4>Antecedentes del paciente</h4>
                                 <p id="antecedentesPaciente"></p>
                             </div>
+                            <div class="tab-pane fade" id="marcapasos">
+                                <h4>Marcapasos</h4>
+                                <form onsubmit="return false" id="marcapasosForm">
+                                    <div class="form-group">
+                                        <label for="amplitud">Amplitud</label>
+                                        <input type="number" class="form-control" id="amplitud" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="duracion">Duración</label>
+                                        <input type="number" class="form-control" id="duracion" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sens">Sensibilidad</label>
+                                        <input type="number" class="form-control" id="sens" required="">
+                                    </div>
+                                    <button class="btn btn-success" type="submit">Actualizar
+                                        <img id="loadingSpinner4" style="text-align: center; display:none; margin: auto"
+                                             src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" width="20" height="20"/>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <!-- /.panel-body -->
@@ -271,12 +297,13 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <div class="panel panel-default ">
-                        <div class="panel-heading "> <h4>Enviar consejo</h4></div>
+                        <div class="panel-heading "><h4>Enviar consejo</h4></div>
 
-                        <textarea id="concejoTxt"  class="form-control"  ></textarea>
+                        <textarea id="concejoTxt" class="form-control"></textarea>
                         <br>
 
-                        <button id="sendConcejoButton" type="button" class="btn btn-primary pull-right" >Enviar consejo</button>
+                        <button id="sendConcejoButton" type="button" class="btn btn-primary pull-right">Enviar consejo
+                        </button>
 
                         <br>
                         <br>
@@ -294,7 +321,7 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body" style="padding: 0 0 0 0; z-index: 20">
                     <img id="loadingSpinner" style="text-align: center; display:block; margin: auto; margin-top: 30%"
-                         src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" width="65" height="65" />
+                         src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" width="65" height="65"/>
                     <div id="curve_chart" class="measureChart"></div>
                 </div>
                 <!-- /.panel-body -->
@@ -311,8 +338,9 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body" style="padding: 0 0 0 0; z-index: 20">
                     <img id="loadingSpinner2" style="text-align: center; display:block; margin: auto; margin-top: 30%"
-                         src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" width="65" height="65" />
-                    <div id="curve_chart2" class="measureChart" style="width: 460px; height: 500px; z-index: -900 !important;"></div>
+                         src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" width="65" height="65"/>
+                    <div id="curve_chart2" class="measureChart"
+                         style="width: 460px; height: 500px; z-index: -900 !important;"></div>
                 </div>
             </div>
             <!-- /.panel -->
@@ -326,8 +354,9 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body" style="padding: 0 0 0 0; z-index: 20">
                     <img id="loadingSpinner3" style="text-align: center; display:block; margin: auto; margin-top: 30%"
-                         src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" width="65" height="65" />
-                    <div id="curve_chart3" class="measureChart" style="width: 460px; height: 500px; z-index: -900 !important;"></div>
+                         src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" width="65" height="65"/>
+                    <div id="curve_chart3" class="measureChart"
+                         style="width: 460px; height: 500px; z-index: -900 !important;"></div>
                 </div>
             </div>
             <!-- /.panel -->
