@@ -106,6 +106,13 @@ POST        /permission/:per/:idgroup           controllers.auth.UserGroupContro
 DELETE      /usergroup/:id                      controllers.auth.UserGroupController.delete(id:String)
 GET         /permission/:id                     controllers.auth.UserGroupController.listPermissionsGroup(id:String)
 
+#########################################
+# Citas
+#########################################
+
+GET         /citas/:id                                       controllers.CitaController.getCitasPaciente(id:String)
+POST        /citas                                           controllers.CitaController.create()
+
 
 
 

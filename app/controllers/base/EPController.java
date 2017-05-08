@@ -45,6 +45,7 @@ public class EPController extends Controller {
     protected static final EPCrudService<SessionToken> tokensCrud = new EPCrudService<>("sessionTokens", SessionToken.class);
     protected static final EPCrudService<UserGroup> userGroupsCrud = new EPCrudService<>("userGroups", UserGroup.class);
     protected static final EPCrudService<UserObject> adminCrud = new EPCrudService<>("admins", UserObject.class);
+    protected static final EPCrudService<Cita> citasCrud = new EPCrudService<>("citas", Cita.class);
 
 
 
