@@ -51,4 +51,22 @@ $(document).ready(function () {
         });
     });
 
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/medicos/id/"+patient.doctorId,
+        "method": "GET",
+        "headers": {
+            "x-auth-token": token.token,
+            "cache-control": "no-cache"
+        }
+    }
+    console.log(token.token);
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        $("#doctorName").append(response.name);
+        $("#emailAddress").append(response.email);
+        $("#phoneNumber").append(response.phoneNumber);
+    });
+
 });

@@ -62,12 +62,10 @@ public class MedicoController extends EPController {
     @With(TokenAuth.class)
     public Result findById(String id) {
         try{
-            SecurityManager.validatePermission("admin", (Http.Context.current.get().flash().get("token")));
-            Medico medico = null;
-            medico = medicosCrud.findById(id);
-            if (medico == null){
+            SecurityManager.validatePermission("view-doctor", (Http.Context.current.get().flash().get("token")));
+            Medico medico = medicosCrud.findById(id);
+            if (medico == null)
                 return error("Object does not exist", 400);
-            }
             return ok(medico);
         } catch (Exception e){
             return error(e.getMessage());

@@ -112,6 +112,7 @@ GET         /permission/:id                     controllers.auth.UserGroupContro
 
 GET         /citas/:id                                       controllers.CitaController.getCitasPaciente(id:String)
 POST        /citas                                           controllers.CitaController.create()
+POST        /citas                                           controllers.CitaController.create()
 
 
 
