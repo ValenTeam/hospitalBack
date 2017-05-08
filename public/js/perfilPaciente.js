@@ -33,4 +33,22 @@ $(document).ready(function () {
 
     updateConcejos();
 
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/citas/"+patient.id,
+        "method": "GET",
+        "headers": {
+            "cache-control": "no-cache"
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        var table4 = $('#citasTable').DataTable();
+        response.forEach(function (cita) {
+            var date = new Date(cita.fecha);
+            table4.row.add([date.toLocaleString(), cita.medico.name]).draw();
+        });
+    });
+
 });
