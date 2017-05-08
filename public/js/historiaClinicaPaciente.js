@@ -35,6 +35,7 @@ $(document).ready(function () {
     updateConcejos();
 
     $.ajax(settings).done(function (data) {
+        console.log(data);
         var table2 = $('#medicionesTable').DataTable();
         data.forEach(function (medicion) {
             var date = new Date(medicion.openTimestamp);

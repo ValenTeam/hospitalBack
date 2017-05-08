@@ -88,6 +88,15 @@ public class MedicionController extends EPController {
         Iterable<Medicion> mediciones = medicionesCrud.collection().find(query).sort(sort).limit(40).as(Medicion.class);
         return ok( mediciones );
     }
+    @With(TokenAuth.class)
+    public Result listImportantByPaciente(String patientId){
+        String sort = EPJson.string("openTimestamp", 1);
+        String ar [] = {"AMARILLO", "ROJO"};
+        String query = EPJson.string("idPaciente", patientId, "colorMedicion", EPJson.map("$in",ar));
+        System.out.println(query);
+        Iterable<Medicion> mediciones = medicionesCrud.collection().find(query).sort(sort).limit(60).as(Medicion.class);
+        return ok( mediciones );
+    }
 
     public Result listByPatientWithinDates(String patientId, Long date1, Long date2){
         ObjectNode dateQuery = EPJson.object( "$gt", date1, "$lt", date2 );
